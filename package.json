@@ -1,0 +1,23 @@
+{
+  "name": "cheesehacks2022",
+  "version": "0.0.1",
+  "description": "CheeseHacks 2022 Registration and Scheduling Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebDev-UW/cheesehacks2022.git"
+  },
+  "author": "WebDevUW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebDev-UW/cheesehacks2022/issues"
+  },
+  "homepage": "https://github.com/WebDev-UW/cheesehacks2022#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1"
+  }
+}
