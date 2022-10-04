@@ -18,6 +18,9 @@
   "homepage": "https://github.com/WebDev-UW/cheesehacks2022#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20",
+    "swagger-autogen": "^2.22.0"
   }
 }
