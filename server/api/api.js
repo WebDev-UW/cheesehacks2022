@@ -1,12 +1,16 @@
 const express = require('express')
 const userUtilityRouter = require('./user-utility/router')
+const teamUtilityRouter = require('./team-utility/router')
 
 const router = express.Router()
 
+router.use(express.json())
+
 router.use('/user-utility', userUtilityRouter)
+router.use('/team-utility', teamUtilityRouter)
 
 router.get('/', (req, res, next) => {
-    res.send('Welcome to the CheeseHacks 2022 API')
+    res.redirect('/docs')
 })
 
 module.exports = router

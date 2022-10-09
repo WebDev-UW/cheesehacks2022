@@ -7,6 +7,9 @@ const APIrouter = require('./api/api')
 const { findOrCreateUser } = require('./api/user-utility/user/functions')
 const router = require('./login')
 
+
+
+
 const dbOptions = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -59,13 +62,41 @@ passport.deserializeUser(function (user, done) {
     done(null, user);
   });
 
+if (process.env.NODE_ENV === 'development') {
+    //api documentation
 
+    const swaggerAutogen = require("swagger-autogen")();
+    const outputFile = "./server/swagger.json";
+    const endpointsFiles = ['./server/index.js']
+    const doc = {
+        info: {
+            title: 'CheeseHacks API',
+            description: 'Development documentation for CheeseHacks that is automatically generated on server start. See swagger-autogen for how to document endpoints when writing API calls.',
+        },
+        host: "localhost:3000",
+        schemes: ['http'],
+    };
+    swaggerAutogen(outputFile, endpointsFiles, doc);
+
+    const options = {
+        explorer: true
+      };
+      const swaggerUi = require("swagger-ui-express");
+      const swaggerDocument = require("./swagger.json");
+      App.use("/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+}
 
 App.use('/api', APIrouter)
 App.use('/login', router)
 
 App.get('/', (req, res, next) => {
     res.send('hello world')
+})
+
+App.get('/logout', (req, res) => {
+    req.logout(err => {
+        err ? console.log(err) : res.redirect('/')
+    })
 })
 
 App.listen(process.env.PORT, () => {
