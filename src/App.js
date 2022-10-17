@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Accordion } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navigation from "./Navigation";
+import Navigation from "./Navigation/Navigation";
 
 export default function App() {
+
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    fetch(`/api/user-utility/self`)
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        setUser(false)
+      }
+    })
+    .then(res => {
+      setUser(res[0])
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
+
+
   return (
     <div>
-      <Navigation />
+      <Navigation user={user} />
       <Container fluid>
         <Row
           style={{

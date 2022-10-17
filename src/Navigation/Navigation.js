@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Navbar, Nav } from 'react-bootstrap'
+import LoginButton from './NavigationComponents/LoginButton'
 
 export default function Navigation(props) {
     return (<Navbar sticky="top" collapseOnSelect expand="lg" bg='dark' variant='dark'>
@@ -13,7 +14,7 @@ export default function Navigation(props) {
           <Nav.Link>Teams</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link>Login</Nav.Link>
+          <LoginButton user={props.user} />
         </Nav>
       </Navbar.Collapse>
     </Container>
