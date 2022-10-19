@@ -2,28 +2,42 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Accordion } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./Navigation/Navigation";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 export default function App() {
-
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch(`/api/user-utility/self`)
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      } else {
-        setUser(false)
-      }
-    })
-    .then(res => {
-      setUser(res[0])
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  }, [])
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setUser(false);
+        }
+      })
+      .then((res) => {
+        setUser(res[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
+  const containerStyle = {
+    width: "100%",
+    height: "400px",
+  };
+
+
+  const center = {
+    lat: 43.0719874,
+    lng: -89.4032545,
+  };
+
+  const edsci = {
+    
+  }
 
   return (
     <div>
@@ -96,121 +110,137 @@ export default function App() {
             </div>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <h1 className="text-center m-5">Judging</h1>
+          </Col>
+        </Row>
         <Row className="px-5">
-          <Col lg="3">
-            <Card className="mb-3 shadow">
+          <Col lg="3" className="mb-3">
+            <Card className="shadow" style={{ height: "100%" }}>
               <Card.Img
+                height="250px"
+                style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/cheesehacks_main.jpg"
+                src="/api/files/innovation.jpg"
               ></Card.Img>
               <Card.Body>
-                <Card.Title>Track 1</Card.Title>
+                <Card.Title>Innovation</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Build a project that expands on the technologies that are
+                  available to you. We want to see you build something that
+                  fulfills a technological need, or brings together technologies
+                  that have never been used together. Whether it's using cameras
+                  on your computer to play pong, or solving multivariable
+                  calculus, it doesn't need to be beautiful to be cool.
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="3">
-            <Card className="mb-3 shadow">
+          <Col lg="3" className="mb-3">
+            <Card className="shadow" style={{ height: "100%" }}>
               <Card.Img
+                height="250px"
+                style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/cheesehacks_main.jpg"
+                src="/api/files/style.jpg"
               ></Card.Img>
               <Card.Body>
-                <Card.Title>Track 2</Card.Title>
+                <Card.Title>Style</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Who cares what the website does - as long as it's pretty! We
+                  want to see a beautiful user interface full of satisfying
+                  buttons and features that make the application feel complete.
+                  "Design is not just what it looks like and feels like. Design
+                  is how it works." -Steve Jobs
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="3">
-            <Card className="mb-3 shadow">
+          <Col lg="3" className="mb-3">
+            <Card className="shadow" style={{ height: "100%" }}>
               <Card.Img
+                height="250px"
+                style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/cheesehacks_main.jpg"
+                src="/api/files/creativity.jpg"
               ></Card.Img>
               <Card.Body>
-                <Card.Title>Track 3</Card.Title>
+                <Card.Title>Creativity</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Think outside of the box! Use your imagination to make your
+                  application different than anything else that exists. Explore
+                  new ideas and tackle the unknown - we gaurantee that you'll be
+                  rewarded!
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="3">
-            <Card className="mb-3 shadow">
+          <Col lg="3" className="mb-3">
+            <Card className="shadow" style={{ height: "100%" }}>
               <Card.Img
+                height="250px"
+                style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/cheesehacks_main.jpg"
+                src="/api/files/viability.jpg"
               ></Card.Img>
               <Card.Body>
-                <Card.Title>Track 4</Card.Title>
+                <Card.Title>Viability</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  After all is said and done - have you built something that
+                  would work out in the wild? Create an application that people
+                  would want to use outside of a competition. Who knows, maybe
+                  this could be the start of your own business (or a good
+                  example to put in your professional portfolio)!
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
         </Row>
-        <Row className='m-5'>
-          <Col lg='4'></Col>
-          <Col lg='4'>
-              <Card className='shadow m-auto'>
-                <Card.Body>
-                  <Row>
-                    <Col><h1 className='text-center'>Hackathon Registration</h1></Col>
-                  </Row>
-                  <Row className='text-center'>
-                    <Col><h4 className='m-5'>25/293 enrolled</h4></Col>
-                    <Col><h4 className='m-5'>3 teams</h4></Col>
-                  </Row>
-                  <Row>
+        <Row className="m-5">
+          <Col lg="4"></Col>
+          <Col lg="4">
+            <Card className="shadow m-auto">
+              <Card.Body>
+                <Row>
+                  <Col>
+                    <h1 className="text-center">Hackathon Registration</h1>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <p className="text-center">
+                      Sign up before all seats are taken!
+                    </p>
+                  </Col>
+                </Row>
+                <Row className="text-center">
+                  <Col>
+                    <h4 className="m-3">25/293 enrolled</h4>
+                  </Col>
+                  <Col>
+                    <h4 className="m-3">3 teams</h4>
+                  </Col>
+                </Row>
+                <Row>
                   <Col className="d-flex justify-content-center">
                     <Button variant="dark" className="mt-3">
                       Register
                     </Button>
                   </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
+                </Row>
+              </Card.Body>
+            </Card>
           </Col>
-          <Col lg='4'></Col>
+          <Col lg="4"></Col>
         </Row>
         <Row className="px-5">
           <Col lg="6">
             <Card className="my-5 shadow">
               <Card.Body>
-                <Card.Title><h1>FAQs</h1></Card.Title>
+                <Card.Title>
+                  <h1>FAQs</h1>
+                </Card.Title>
                 <Accordion flush>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>What is a Hackathon?</Accordion.Header>
@@ -227,13 +257,18 @@ export default function App() {
                       show up on the day of the hackathon with your laptop!
                     </Accordion.Body>
                   </Accordion.Item>
+                  <Accordion.Item eventKey="1.5">
+                    <Accordion.Header>I'm a Freshman, can I attend?</Accordion.Header>
+                    <Accordion.Body>For sure! Regardless of experience, you are welcome to come and hack! It's a great opportunity to build your personal professional portfolio</Accordion.Body>
+                  </Accordion.Item>
                   <Accordion.Item eventKey="2">
                     <Accordion.Header>
                       Is there any cost to attend?
                     </Accordion.Header>
                     <Accordion.Body>
                       No! The hackathon is graciously supported by our corporate
-                      sponsors. Additionally, we will provide free catered food on the night of the 12th.
+                      sponsors. Additionally, we will provide free catered food
+                      on the night of the 12th.
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="3">
@@ -260,18 +295,40 @@ export default function App() {
                       give a presentation to win awards or prizes.
                       <br />
                       <br />
-                      The hackathon will occur at Educational Sciences Room 204, <a href='https://map.wisc.edu/s/20807nlk'>1025 W. Johnson St, Madison, WI 53715</a>. We have reserved additional rooms in the building for use during the hackathon.
+                      The hackathon will occur at Educational Sciences Room 204,{" "}
+                      <a href="https://map.wisc.edu/s/20807nlk">
+                        1025 W. Johnson St, Madison, WI 53715
+                      </a>
+                      . We have reserved additional rooms in the building for
+                      use during the hackathon.
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="6"></Col>
+          <Col lg="6">
+            <Card className='my-5'>
+              <Card.Body>
+                <LoadScript googleMapsApiKey="AIzaSyClFNuBjB5lqtqPWEku0Go7Y_uSVwTfvEE">
+                  
+                  <GoogleMap
+                   
+                    mapContainerStyle={containerStyle}
+                    center={center}
+                    zoom={15}
+                  ><Marker position={center} title="CheeseHacks 2022"></Marker></GoogleMap>
+                </LoadScript>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
         <Row className="px-5">
           <Col>
             <h1 className="text-center">Sponsors</h1>
+            <div className='d-flex justify-content-center mb-5'>
+            <img style={{width: '75%'}} className='mt-5' src='/api/files/compsci.png'></img>
+            </div>
           </Col>
         </Row>
       </Container>

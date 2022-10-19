@@ -19,6 +19,7 @@
   "homepage": "https://github.com/WebDev-UW/cheesehacks2022#readme",
   "dependencies": {
     "@babel/preset-react": "^7.18.6",
+    "@react-google-maps/api": "^2.13.1",
     "babel": "^6.23.0",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.2",
