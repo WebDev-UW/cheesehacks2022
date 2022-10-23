@@ -13,7 +13,7 @@ export default function Navigation(props) {
           <Nav.Link>About</Nav.Link>
           <Nav.Link>Sponsors</Nav.Link>
           <Nav.Link>Teams</Nav.Link>
-          <Link to='/home'>Home</Link>
+          <Link to='/home' style={{textDecoration: 'none', padding: "8px 0 0 8px", color: "var(--bs-nav-link-color)"}}>Home</Link>
         </Nav>
         <Nav>
           <LoginButton user={props.user} />
