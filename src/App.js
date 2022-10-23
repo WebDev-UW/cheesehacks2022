@@ -32,9 +32,9 @@ export default function App(props) {
   return (
     <div>
       <Navigation user={user} />
-    <Routes>
-      {siteRoutes.map(siteRoute => siteRoute)}
-    </Routes>
+      <Routes>
+        {siteRoutes.map(siteRoute => siteRoute)}
+      </Routes>
     </div>
 
   );
