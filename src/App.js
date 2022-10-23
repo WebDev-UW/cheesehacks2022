@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Accordion } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./Navigation/Navigation";
+import Home from "./Home/Home"
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 export default function App() {
