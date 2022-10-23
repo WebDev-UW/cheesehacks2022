@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Navbar, Nav } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import LoginButton from './NavigationComponents/LoginButton'
 
 export default function Navigation(props) {
@@ -12,6 +13,7 @@ export default function Navigation(props) {
           <Nav.Link>About</Nav.Link>
           <Nav.Link>Sponsors</Nav.Link>
           <Nav.Link>Teams</Nav.Link>
+          <Link to='/home'>Home</Link>
         </Nav>
         <Nav>
           <LoginButton user={props.user} />

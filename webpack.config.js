@@ -66,7 +66,8 @@ module.exports = {
     new HotModuleReplacementPlugin()
   ] : [
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
+      template: "./src/index.html",
+      inject: false
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",

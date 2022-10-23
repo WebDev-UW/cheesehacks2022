@@ -1,8 +1,9 @@
 import React from 'react';
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button, Container } from "react-bootstrap";
 
-export default function Home() {
+export default function Home(props) {
   return (
+    <Container>
     
     <Row className="px-5">
     <Col lg="3" className="mb-3">
@@ -40,5 +41,6 @@ export default function Home() {
   </Card>
   </Col>
   </Row>
+  </Container>
   )
 }
