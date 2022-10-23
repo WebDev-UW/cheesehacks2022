@@ -1,13 +1,32 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { Container, Row, Col, Card, Button, Accordion } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Accordion, Spinner } from "react-bootstrap";
 import Navigation from "../Navigation/Navigation";
+import Faqs from "./Faqs";
 
 export default function External(props) {
 
+    const [countUsers, setCountUsers] = useState(null)
+
+    useEffect(() => {
+      fetch('/api/user-utility/stats', {
+        method: 'GET',
+        headers: {"Content-Type": 'application/json'}
+      })
+      .then(res => {
+       return res.ok ? res.json() : new Error('An unexpected error occurred while loading the number of users enrolled') 
+      })
+      .then(data => {
+        setCountUsers(data[0].count_of_users)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }, [])
+
     const containerStyle = {
         width: "100%",
-        height: "400px",
+        height: "100%",
       };
     
     
@@ -192,7 +211,7 @@ export default function External(props) {
                 </Row>
                 <Row className="text-center">
                   <Col>
-                    <h4 className="m-3">25/293 enrolled</h4>
+                    {countUsers ? <h4 className="m-3">{countUsers}/293 enrolled</h4> : <Spinner animation='border' />}
                   </Col>
                   <Col>
                     <h4 className="m-3">3 teams</h4>
@@ -217,74 +236,12 @@ export default function External(props) {
                 <Card.Title>
                   <h1>FAQs</h1>
                 </Card.Title>
-                <Accordion flush>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>What is a Hackathon?</Accordion.Header>
-                    <Accordion.Body>
-                      A hackathon is an event where students come together to
-                      work on software projects
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>How do I attend?</Accordion.Header>
-                    <Accordion.Body>
-                      Register on this website to save your seat. Then, browse
-                      or create a team for the hackathon. And most importantly,
-                      show up on the day of the hackathon with your laptop!
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1.5">
-                    <Accordion.Header>I'm a Freshman, can I attend?</Accordion.Header>
-                    <Accordion.Body>For sure! Regardless of experience, you are welcome to come and hack! It's a great opportunity to build your personal professional portfolio</Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="2">
-                    <Accordion.Header>
-                      Is there any cost to attend?
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      No! The hackathon is graciously supported by our corporate
-                      sponsors. Additionally, we will provide free catered food
-                      on the night of the 12th.
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="3">
-                    <Accordion.Header>
-                      What kind of projects can I build?
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      You can work on anything! Whether it is built in Java,
-                      JavaScript, C++, C#, or any other language, you will fit
-                      right in. Any experience level is welcome to participtate.
-                      We judge based on different factors, such as the user
-                      interface of the end-product, to the technical complexity
-                      of the product created.
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="4">
-                    <Accordion.Header>
-                      When and where is the hackathon?
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      The hackathon is planned for Saturday, November 12th at
-                      noon to Sunday, November 13th at noon. After the hackathon
-                      ends, judging will be performed and you may be asked to
-                      give a presentation to win awards or prizes.
-                      <br />
-                      <br />
-                      The hackathon will occur at Educational Sciences Room 204,{" "}
-                      <a href="https://map.wisc.edu/s/20807nlk">
-                        1025 W. Johnson St, Madison, WI 53715
-                      </a>
-                      . We have reserved additional rooms in the building for
-                      use during the hackathon.
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
+                <Faqs />
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="6">
-            <Card className='my-5'>
+          <Col lg="6" className='d-flex'>
+            <Card className='my-5' style={{flexGrow: '1', minHeight: '500px'}}>
               <Card.Body>
                 <LoadScript googleMapsApiKey="AIzaSyClFNuBjB5lqtqPWEku0Go7Y_uSVwTfvEE">
                   
