@@ -7,6 +7,7 @@ import Faqs from "./Faqs";
 export default function External(props) {
 
     const [countUsers, setCountUsers] = useState(null)
+    const [countTeams, setCountTeams] = useState(null)
 
     useEffect(() => {
       fetch('/api/user-utility/stats', {
@@ -18,6 +19,22 @@ export default function External(props) {
       })
       .then(data => {
         setCountUsers(data[0].count_of_users)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }, [])
+
+    useEffect(() => {
+      fetch('/api/team-utility/stats', {
+        method: 'GET',
+        headers: {"Content-Type": 'application/json'}
+      })
+      .then(res => {
+       return res.ok ? res.json() : new Error('An unexpected error occurred while loading the number of teams') 
+      })
+      .then(data => {
+        setCountTeams(data[0].count_of_teams)
       })
       .catch(err => {
         console.log(err)
@@ -214,7 +231,7 @@ export default function External(props) {
                     {countUsers ? <h4 className="m-3">{countUsers}/293 enrolled</h4> : <Spinner animation='border' />}
                   </Col>
                   <Col>
-                    <h4 className="m-3">3 teams</h4>
+                    {countUsers ? <h4 className="m-3">{countTeams} team{countTeams == 1 ? "" : "s"}</h4> : <Spinner animation='border' />}
                   </Col>
                 </Row>
                 <Row>
