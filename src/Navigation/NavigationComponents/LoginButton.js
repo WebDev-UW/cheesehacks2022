@@ -14,7 +14,7 @@ export default function LoginButton(props) {
     return <Nav.Link href='/login'>Login</Nav.Link>;
   } else if (props.user && props.user.id) {
     return (
-      <Nav.Link>
+      <Nav.Link href="/home">
         <div>
           <img height='18px' width='18px' className='mx-2' style={{objectFit: 'cover', borderRadius: '50%'}} src={`${props.user.profile_picture_url}`} onError={({ currentTarget }) => {
                     currentTarget.onerror = null; // prevents looping

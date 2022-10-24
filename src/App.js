@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation/Navigation";
-import Home from "./Home/Home"
-import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes } from "react-router-dom";
+import Home from "./Home/Home";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
 import Admin from "./Admin/Admin";
 import External from "./External/External";
 
-const siteRoutes = [<Route path='/' element={<External />} key='1' />, <Route path='/home' element={<Home />} key='2' />]
+
 
 export default function App(props) {
-
-  
   const [user, setUser] = useState(null);
+  const siteRoutes = [
+    {path: "/", element: <External user={user} />},
+    {path: "/home", element: <Home user={user} />},
+  ];
 
   useEffect(() => {
     fetch(`/api/user-utility/self`)
@@ -32,10 +41,7 @@ export default function App(props) {
   return (
     <div>
       <Navigation user={user} />
-      <Routes>
-        {siteRoutes.map(siteRoute => siteRoute)}
-      </Routes>
+      <Routes>{siteRoutes.map((siteRoute, i) => <Route path={siteRoute.path} element={siteRoute.element} {...props} key={i} />)}</Routes>
     </div>
-
   );
 }
