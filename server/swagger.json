@@ -22,6 +22,31 @@
         }
       }
     },
+    "/logout": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/home": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/admin": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
     "/*": {
       "get": {
         "description": "",
@@ -31,13 +56,6 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/logout": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
       }
     },
     "/api/": {

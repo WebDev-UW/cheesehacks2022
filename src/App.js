@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Admin from "./Admin/Admin";
 import External from "./External/External";
+import NotFound from "./NotFound";
 
 
 
@@ -19,6 +20,8 @@ export default function App(props) {
   const siteRoutes = [
     {path: "/", element: <External user={user} />},
     {path: "/home", element: <Home user={user} />},
+    {path: '/admin', element: <Admin user={user} />},
+    {path: '/*', element: <NotFound />}
   ];
 
   useEffect(() => {

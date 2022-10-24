@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -15,7 +15,16 @@ export default function Home(props) {
   const [showIncomplete, setShowIncomplete] = useState(true);
   const [showRegistered, setShowRegistered] = useState(true);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false)
+  const [awhile, isAwhile] = useState(false)
 
+
+  useEffect(() => {
+    setTimeout(() => {isAwhile(true)}, 5000)
+  }, [])
+
+  if (props.user) {
+
+  
   return (
     <Container>
       <link
@@ -23,7 +32,7 @@ export default function Home(props) {
         rel="stylesheet"
       ></link>
       <Row className="my-3">
-        <Col lg="12">
+        <Col lg="12" className='d-flex flex-row align-items-end'>
           <h1
             style={{
               fontFamily: "'Raleway', sans-serif",
@@ -35,7 +44,7 @@ export default function Home(props) {
             Welcome,{" "}
             {props.user &&
               (props.user.first_name ?? <Spinner animation="border" />)}
-          </h1>
+          </h1><small style={{marginBottom: '8px'}}><a href='/logout'>(logout)</a></small>
         </Col>
       </Row>
       {props.user && props.user.admin === 1 && (
@@ -163,7 +172,7 @@ export default function Home(props) {
                 However, we will need some additional information about you in
                 order to make everything run smoothly.
               </p>
-              <Button variant='dark' onClick={() => {setShowRegistrationModal(true)}}>Register</Button>
+              {props.user && !props.user.registered ? <Button variant='dark' onClick={() => {setShowRegistrationModal(true)}}>Register</Button> : <p style={{color: 'green'}}>Registration Completed. Thank you!</p>}
             </Card.Body>
           </Card>
         </Col>
@@ -171,4 +180,7 @@ export default function Home(props) {
       <Registration user={props.user} show={showRegistrationModal} onClose={() => {setShowRegistrationModal(false)}} />
     </Container>
   );
+        } else {
+          return <Container><Row><Col className='text-center my-5'><Spinner animation='border' />{awhile ? <p className='text-muted'>If this is taking a long time, make sure that you are <a href='/login'>signed in</a></p> : <></>}</Col></Row></Container>
+        }
 }

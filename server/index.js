@@ -111,15 +111,35 @@ App.get("/bundle.js", (req, res) => {
   }
 });
 
-App.get("/*", (req, res) => {
-  res.sendFile(rootPath + "/src/index.html");
-});
-
 App.get("/logout", (req, res) => {
   req.logout((err) => {
     err ? console.log(err) : res.redirect("/");
   });
 });
+
+App.get('/home', (req, res, next) => {
+  if (!req.session.passport) {
+    res.redirect('/login')
+  } else {
+    next()
+  }
+})
+
+App.get('/admin', (req, res, next) => {
+  if (!req.session.passport) {
+    res.redirect('/login')
+  } else if (req.session.passport.user.admin === 1) {
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+})
+
+App.get("/*", (req, res) => {
+  res.sendFile(rootPath + "/src/index.html");
+});
+
+
 
 App.listen(process.env.PORT, () => {
   console.log(`Server started on ${process.env.PORT}`);
