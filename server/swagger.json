@@ -99,6 +99,31 @@
             "description": "Not Found"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "user-utility/self"
+        ],
+        "summary": "Modify information about yourself",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "admin": {
+                  "example": "any"
+                },
+                "google_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
       }
     },
     "/api/user-utility/stats/": {
