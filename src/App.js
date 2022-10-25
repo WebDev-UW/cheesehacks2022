@@ -12,6 +12,7 @@ import {
 import Admin from "./Admin/Admin";
 import External from "./External/External";
 import NotFound from "./NotFound";
+import TeamBrowser from "./Teams/TeamBrowser";
 
 
 
@@ -21,6 +22,7 @@ export default function App(props) {
     {path: "/", element: <External user={user} />},
     {path: "/home", element: <Home user={user} setUser={setUser} />},
     {path: '/admin', element: <Admin user={user} />},
+    {path: '/teams', element: <TeamBrowser user={user} />},
     {path: '/*', element: <NotFound />}
   ];
 

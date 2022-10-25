@@ -14,5 +14,6 @@ module.exports = {
     lactose_intolerant: 'lactose_intolerant',
     gluten_free: 'gluten_free',
     additional_diet: 'additional_diet',
-    registered: 'registered'
+    registered: 'registered',
+    team: 'team'
 }

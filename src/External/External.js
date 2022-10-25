@@ -228,7 +228,7 @@ export default function External(props) {
                 </Row>
                 <Row className="text-center">
                   <Col>
-                    {countUsers ? <h4 className="m-3">{countUsers}/293 enrolled</h4> : <Spinner animation='border' />}
+                    {countUsers ? <h4 className="m-3">{countUsers}/150 enrolled</h4> : <Spinner animation='border' />}
                   </Col>
                   <Col>
                     {countUsers ? <h4 className="m-3">{countTeams} team{countTeams == 1 ? "" : "s"}</h4> : <Spinner animation='border' />}
