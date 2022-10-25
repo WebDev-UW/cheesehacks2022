@@ -19,7 +19,7 @@ export default function App(props) {
   const [user, setUser] = useState(null);
   const siteRoutes = [
     {path: "/", element: <External user={user} />},
-    {path: "/home", element: <Home user={user} />},
+    {path: "/home", element: <Home user={user} setUser={setUser} />},
     {path: '/admin', element: <Admin user={user} />},
     {path: '/*', element: <NotFound />}
   ];

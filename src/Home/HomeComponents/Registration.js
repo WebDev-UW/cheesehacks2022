@@ -6,6 +6,7 @@ export default function Registration(props) {
   const [updatedUser, setUpdatedUser] = useState(props.user ?? {});
   const [otherRestrictions, setOtherRestrictions] = useState(false);
   const [attestation, setAttestation] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (props.user) {
@@ -27,12 +28,42 @@ export default function Registration(props) {
     setUpdatedUser(newUserInfo);
   }
 
+  function upload() {
+    const bodyToUpload = JSON.parse(JSON.stringify(updatedUser))
+    bodyToUpload.registered = 1
+    fetch('/api/user-utility/self', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(bodyToUpload)
+    })
+    .then(res => {
+        if (res.ok) {
+            return res.json()
+        } else {
+            throw new Error('An unexpected error occurred')
+        }
+    })
+    .then(res => {
+        console.log('ok!')
+        props.setUser(bodyToUpload)
+        props.onClose()
+    })
+    .catch(err => {
+        console.log(err)
+        setError(true)
+    })
+  }
+
   return (
     <Modal show={props.show} onHide={props.onClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>Registration Form</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error ? <Alert variant='danger'>
+            <Alert.Heading>Error</Alert.Heading>
+            <p>An unexpected error occurred. Please contact rswerner@wisc.edu</p>
+            </Alert> : <></>}
         <Form>
           <Row>
             <Col>
@@ -179,7 +210,7 @@ export default function Registration(props) {
         <Button variant="outline-dark" onClick={props.onClose}>
           Cancel
         </Button>
-        <Button disabled={!attestation} variant="dark">Submit</Button>
+        <Button disabled={!attestation} onClick={() => upload()} variant="dark">Submit</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -177,7 +177,7 @@ export default function Home(props) {
           </Card>
         </Col>
       </Row>
-      <Registration user={props.user} show={showRegistrationModal} onClose={() => {setShowRegistrationModal(false)}} />
+      <Registration user={props.user} show={showRegistrationModal} onClose={() => {setShowRegistrationModal(false)}} setUser={props.setUser} />
     </Container>
   );
         } else {
