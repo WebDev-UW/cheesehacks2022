@@ -10,9 +10,10 @@ export default function Navigation(props) {
       <Navbar.Toggle />
       <Navbar.Collapse>
         <Nav className="me-auto">
-          <Nav.Link>About</Nav.Link>
-          <Nav.Link>Sponsors</Nav.Link>
-          <Nav.Link>Teams</Nav.Link>
+          <Nav.Link href='#about'>About</Nav.Link>
+          <Nav.Link href='#sponsors'>Sponsors</Nav.Link>
+          {//<Nav.Link>Teams</Nav.Link>
+}
         </Nav>
         <Nav>
           <LoginButton user={props.user} />

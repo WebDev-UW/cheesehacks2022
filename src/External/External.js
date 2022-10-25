@@ -86,7 +86,7 @@ export default function External(props) {
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button variant="dark" className="mt-3">
+                    <Button variant="dark" className="mt-3" href="/home">
                       Register
                     </Button>
                   </Col>
@@ -106,7 +106,7 @@ export default function External(props) {
                 minHeight: "30vh",
               }}
             >
-              <h1>About</h1>
+              <h1 id='about'>About</h1>
               <p className="m-4" style={{ fontSize: "1.3rem" }}>
                 CheeseHacks is a 24-hour hackathon that takes place over a fall
                 weekend on the UW-Madison Campus. We bring together students
@@ -236,7 +236,7 @@ export default function External(props) {
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button variant="dark" className="mt-3">
+                    <Button variant="dark" className="mt-3" href='/home'>
                       Register
                     </Button>
                   </Col>
@@ -275,10 +275,16 @@ export default function External(props) {
         </Row>
         <Row className="px-5">
           <Col>
-            <h1 className="text-center">Sponsors</h1>
-            <div className='d-flex justify-content-center mb-5'>
-            <img style={{width: '75%'}} className='mt-5' src='/api/files/compsci.png'></img>
-            </div>
+            <h1 className="text-center" id="sponsors">Sponsors</h1>
+            <Container>
+              <Row className='align-items-center'>
+                <Col xl='6'><img style={{width: '100%'}} className='my-3' src='/api/files/compsci.png'></img></Col>
+                <Col xl='6'><img style={{width: '100%'}} className='my-3' src='/api/files/genmills.png' /></Col>
+              </Row>
+            </Container>
+            
+            
+            
           </Col>
         </Row>
       </Container></div>);
