@@ -10,7 +10,7 @@ const columnNames = require("./columnNames");
  */
 function getAllTeams() {
   return new Promise((resolve, reject) => {
-    db.query(`SELECT * FROM team_entry;`, [], (err, rows) => {
+    db.query(`SELECT team.*, GROUP_CONCAT(user.id) AS user_ids FROM team_entry AS team LEFT JOIN user_entry AS user ON team.id = user.team GROUP BY team.id;`, [], (err, rows) => {
       err ? reject(err) : resolve(rows);
     });
   });
@@ -24,7 +24,7 @@ function getAllTeams() {
  */
 function getTeam(id) {
   return new Promise((resolve, reject) => {
-    db.query(`SELECT * FROM team_entry WHERE id = ?`, [id], (err, rows) => {
+    db.query(`SELECT team.*, GROUP_CONCAT(user.id) AS user_ids FROM team_entry AS team LEFT JOIN user_entry AS user ON team.id = user.team WHERE team.id = ? GROUP BY team.id`, [id], (err, rows) => {
       err ? reject(err) : resolve(rows);
     });
   });

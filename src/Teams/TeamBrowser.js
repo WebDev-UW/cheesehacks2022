@@ -22,7 +22,7 @@ export default function TeamBrowser(props) {
             <h4>{team.name}</h4>
             {team.description}
             </div>
-            <div>3 / 4 members</div>
+            <div>{team.user_ids ? team.user_ids.split(',').length : '0'} / 4 members</div>
             </div>
           </ListGroup.Item>
         );

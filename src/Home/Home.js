@@ -151,8 +151,8 @@ export default function Home(props) {
                           This is for you if you want to join an already created
                           team.
                         </Card.Text>
-                        <Button variant="primary" className="mt-auto">
-                          Join Team
+                        <Button href='/teams' variant="primary" className="mt-auto">
+                          Browse Teams
                         </Button>
                       </Card.Body>
                     </Card>

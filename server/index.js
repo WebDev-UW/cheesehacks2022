@@ -135,6 +135,14 @@ App.get('/admin', (req, res, next) => {
   }
 })
 
+App.get('/teams/bundle.js', (req, res, next) => {
+  if (process.env.NODE_ENV === "production") {
+    res.sendFile(rootPath + "/dist/bundle.js");
+  } else {
+    res.redirect('/bundle.js')
+  }
+})
+
 App.get("/*", (req, res) => {
   res.sendFile(rootPath + "/src/index.html");
 });

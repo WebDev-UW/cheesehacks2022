@@ -12,6 +12,19 @@ function getAllUsers() {
     })
 }
 
+/**
+ * 
+ * @param {Integer} id The ID of the user 
+ * @returns Promise that resolves to a JSON array that contains the user object
+ */
+function getSpecificUser(id) {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM user_entry WHERE id = ?`, [id], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 function getUserFromGoogleID(google_id) {
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM user_entry WHERE google_id = ?`, [google_id], (err, rows) => {
@@ -43,4 +56,4 @@ function findOrCreateUser(profile) {
     })
 }
 
-module.exports = {getAllUsers, findOrCreateUser}
+module.exports = {getAllUsers, findOrCreateUser, getSpecificUser}

@@ -8,21 +8,25 @@ import {
   Route,
   RouterProvider,
   Routes,
+  useParams,
 } from "react-router-dom";
 import Admin from "./Admin/Admin";
 import External from "./External/External";
 import NotFound from "./NotFound";
 import TeamBrowser from "./Teams/TeamBrowser";
+import Team from "./Team/Team";
 
 
 
 export default function App(props) {
+
   const [user, setUser] = useState(null);
   const siteRoutes = [
     {path: "/", element: <External user={user} />},
     {path: "/home", element: <Home user={user} setUser={setUser} />},
     {path: '/admin', element: <Admin user={user} />},
-    {path: '/teams', element: <TeamBrowser user={user} />},
+    {path: '/teams', element: <TeamBrowser user={user}></TeamBrowser>},
+    {path: '/teams/:id', element: <Team user={user} />},
     {path: '/*', element: <NotFound />}
   ];
 
