@@ -8,15 +8,17 @@ import {
   Col,
   Alert,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function TeamBrowser(props) {
   const [teams, setTeams] = useState(null);
+  const navigate = useNavigate()
 
   function renderTeams() {
     if (teams && teams.length > 0) {
       return teams.map((team) => {
         return (
-          <ListGroup.Item key={team.id} action>
+          <ListGroup.Item key={team.id} action onClick={() => {navigate(`/teams/${team.id}`)}}>
             <div className='d-flex justify-content-between align-items-center'>
             <div className='d-flex flex-column'>
             <h4>{team.name}</h4>
