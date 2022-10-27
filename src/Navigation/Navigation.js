@@ -12,8 +12,7 @@ export default function Navigation(props) {
         <Nav className="me-auto">
           <Nav.Link href='#about'>About</Nav.Link>
           <Nav.Link href='#sponsors'>Sponsors</Nav.Link>
-          {//<Nav.Link>Teams</Nav.Link>
-}
+          <Nav.Link href='/teams'>Teams</Nav.Link>
         </Nav>
         <Nav>
           <LoginButton user={props.user} />

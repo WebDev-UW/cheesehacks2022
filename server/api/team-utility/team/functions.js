@@ -68,4 +68,12 @@ function modifyTeam(data) {
   });
 }
 
-module.exports = { getAllTeams, getTeam, createTeam, modifyTeam };
+function deleteTeam(id) {
+  return new Promise((resolve, reject) => {
+    db.query(`DELETE FROM team_entry WHERE id = ?`, [id], (err, rows) => {
+      err ? reject(err) : resolve(rows)
+    })
+  })
+}
+
+module.exports = { getAllTeams, getTeam, createTeam, modifyTeam, deleteTeam };

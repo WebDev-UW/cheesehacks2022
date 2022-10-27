@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllTeams, getTeam, createTeam, modifyTeam } = require('./functions')
+const { getAllTeams, getTeam, createTeam, modifyTeam, deleteTeam } = require('./functions')
 
 const router = express.Router()
 
@@ -119,6 +119,27 @@ router.put('/:id', (req, res) => {
         }
     } else {
         res.sendStatus(401)
+    }
+})
+
+router.delete('/:id', (req, res) => {
+    if (!req.session.passport || !req.session.passport.user.id) {
+        res.sendStatus(401)
+    } else if (!req.params.id) {
+        res.sendStatus(400)
+    } else {
+        getTeam(req.params.id)
+        .then(teams => {
+            if (parseInt(teams[0].team_captain) === parseInt(req.session.passport.user.id)) {
+                deleteTeam(req.params.id)
+            } else {
+                res.sendStatus(403)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({err: err})
+        })
     }
 })
 

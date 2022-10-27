@@ -66,7 +66,7 @@ export default function TeamBrowser(props) {
               <Card.Title>Teams</Card.Title>
             </Card.Header>
             <Card.Body>
-              {props.user && !props.user.team ? (
+              {props.user && !props.user.team && (
                 <Alert variant="danger">
                   <Alert.Heading>No Team Enrollment</Alert.Heading>
                   <p>
@@ -75,7 +75,7 @@ export default function TeamBrowser(props) {
                     day of the hackathon and we can help you find a team.
                   </p>
                 </Alert>
-              ) : (
+              )} {props.user && props.user.team && (
                 <Alert variant="success">
                   <Alert.Heading>Team Enrollment Complete</Alert.Heading>
                   <p>
@@ -84,6 +84,7 @@ export default function TeamBrowser(props) {
                   </p>
                 </Alert>
               )}
+              
               <ListGroup variant="flush">{renderTeams()}</ListGroup>
             </Card.Body>
           </Card>

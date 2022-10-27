@@ -105,7 +105,7 @@ export default function Home(props) {
       )}
       <Row className="my-3">
         <Col lg="6" className="d-flex flex-row">
-          <Card className="shadow">
+          {!props.user.team ? <Card className="shadow">
             <Card.Body>
               <Card.Title>Team Management</Card.Title>
               <p>
@@ -160,7 +160,9 @@ export default function Home(props) {
                 </Row>
               </Container>
             </Card.Body>
-          </Card>
+          </Card> : <Card>
+            <Card.Img src={'/api/files/join-team.jpg'} style={{maxHeight: '300px'}}></Card.Img>
+            <Card.Body><Card.Title>Team Management</Card.Title><p>You have successfully joined a team! You can <a href='/teams'>manage your team membership</a> if you would like to leave or join a different team.</p></Card.Body></Card>}
         </Col>
         <Col lg="6">
           <Card>

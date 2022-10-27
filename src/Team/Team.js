@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import NotFound from "../NotFound";
+import DisbandModal from "./DisbandModal";
 import RemoveModal from "./RemoveModal";
 
 function loadUser(id) {
@@ -132,6 +133,7 @@ export default function Team(props) {
   const [members, setMembers] = useState(null);
   const [asCaptain, setAsCaptain] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
+  const [showDisbandModal, setShowDisbandModal] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false);
   const [asOf, setAsOf] = useState(new Date());
   const navigate = useNavigate();
@@ -253,6 +255,7 @@ export default function Team(props) {
                     onClick={() => {
                       leaveTeam(setAsOf, props.user, props.setUser);
                     }}
+                    disabled={teamInfo[0] && parseInt(props.user.id) === teamInfo[0].team_captain}
                   >
                     Leave Team
                   </Button>
@@ -280,6 +283,7 @@ export default function Team(props) {
                   The Team captain reserves the right to remove any members of
                   their team as they see fit
                 </p>
+                {props.user && parseInt(teamInfo[0].team_captain) === props.user.id ? <div className='d-flex'><Button style={{margin: 'auto'}} variant='outline-danger' onClick={() => {setShowDisbandModal(true)}}>Disband Team</Button></div> : <></>}
               </Card.Body>
             </Card>
             <Card className="my-3 shadow">
@@ -322,6 +326,7 @@ export default function Team(props) {
             setShowRemoveModal(false);
           }}
         />
+        <DisbandModal show={showDisbandModal} onHide={() => setShowDisbandModal(false)} confirm={() => {console.log('hi')}} />
       </Container>
     );
   }
