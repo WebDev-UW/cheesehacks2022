@@ -268,7 +268,7 @@ export default function Team(props) {
               <Card.Body>
                 <Card.Title>{teamInfo[0].name}</Card.Title>
                 <p>{teamInfo[0].description}</p>
-                {props.user && !props.user.team && teamInfo[0].user_ids.split(',').length < 4 && (
+                {props.user && !props.user.team && teamInfo[0] && teamInfo[0].user_ids && teamInfo[0].user_ids.split(',').length < 4 && (
                   <Button onClick={() => joinTeam(params.id, setAsOf, props.user, props.setUser)}>
                     Join Team
                   </Button>

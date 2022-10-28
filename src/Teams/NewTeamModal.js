@@ -43,7 +43,7 @@ export default function NewTeamModal(props) {
                 .then(res => {
                     const userCopy = JSON.parse(JSON.stringify(props.user))
                         userCopy.team = null
-                        setUser(userCopy)
+                        props.setUser(userCopy)
                     navigate(`/teams/${teamid}`)
                 })
                 .catch(err => {
@@ -65,7 +65,7 @@ export default function NewTeamModal(props) {
         <Modal.Title>Create New Team</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      {formErr && <Alert variant='danger'>An error occurred in your submission. Make sure all fields are filled out and try again</Alert>}
+      {formErr && <Alert variant='danger'>An error occurred in your submission. Make sure all fields are filled out, and if they are, contact an administrator</Alert>}
         <p>
           This form will create a new team and designate you as the team
           captain. You will automatically become part of this team once created.
