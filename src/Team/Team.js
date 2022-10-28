@@ -91,6 +91,25 @@ function joinTeam(teamId, setAsOf, user, setUser) {
     });
 }
 
+function disbandTeam(teamId, setAsOf, user, setUser, navigate) {
+  fetch(`/api/team-utility/team/${teamId}`, {
+    method: "DELETE",
+  })
+  .then(res => {
+    if (res.ok) {
+      const userCopy = JSON.parse(JSON.stringify(user))
+        userCopy.team = null
+        setUser(userCopy)
+        navigate('/teams')
+    } else {
+      throw new Error('An unexpected error occurred')
+    }
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 function renderMember(member, asCaptain, user, setShowRemoveModal) {
   return (
     <ListGroup.Item
@@ -102,6 +121,10 @@ function renderMember(member, asCaptain, user, setShowRemoveModal) {
           style={{ height: "35px" }}
           className="rounded-circle"
           src={member.profile_picture_url}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src=`/api/files/favicon.ico`;
+          }}
         ></img>
       </div>
       <div className="d-flex flex-column">
@@ -142,6 +165,7 @@ export default function Team(props) {
     setMembers(null)
     if (
       teamInfo &&
+      teamInfo[0] &&
       teamInfo[0].user_ids &&
       teamInfo[0].user_ids.split(",").length > 0
     ) {
@@ -244,7 +268,7 @@ export default function Team(props) {
               <Card.Body>
                 <Card.Title>{teamInfo[0].name}</Card.Title>
                 <p>{teamInfo[0].description}</p>
-                {props.user && !props.user.team && (
+                {props.user && !props.user.team && teamInfo[0].user_ids.split(',').length < 4 && (
                   <Button onClick={() => joinTeam(params.id, setAsOf, props.user, props.setUser)}>
                     Join Team
                   </Button>
@@ -290,7 +314,7 @@ export default function Team(props) {
               <Card.Body>
                 <Card.Title>
                   Members{" "}
-                  {members && <Badge variant="dark">{members.length}</Badge>}
+                  {members && <Badge variant="dark">{members.length} / 4</Badge>}
                 </Card.Title>
                 <ListGroup variant="flush">
                   {members && members.length > 0 ? (
@@ -326,7 +350,7 @@ export default function Team(props) {
             setShowRemoveModal(false);
           }}
         />
-        <DisbandModal show={showDisbandModal} onHide={() => setShowDisbandModal(false)} confirm={() => {console.log('hi')}} />
+        <DisbandModal show={showDisbandModal} onHide={() => setShowDisbandModal(false)} confirm={() => {disbandTeam(params.id, setAsOf, props.user, props.setUser, navigate); setShowDisbandModal(false)}} />
       </Container>
     );
   }

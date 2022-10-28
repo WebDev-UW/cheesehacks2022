@@ -132,6 +132,13 @@ router.delete('/:id', (req, res) => {
         .then(teams => {
             if (parseInt(teams[0].team_captain) === parseInt(req.session.passport.user.id)) {
                 deleteTeam(req.params.id)
+                .then(deletion => {
+                    res.sendStatus(204)
+                })
+                .catch(err => {
+                    console.log(err)
+                    res.status(500).json({err: err})
+                })
             } else {
                 res.sendStatus(403)
             }

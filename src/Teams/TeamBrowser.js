@@ -7,11 +7,14 @@ import {
   Row,
   Col,
   Alert,
+  Button,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import NewTeamModal from "./NewTeamModal";
 
 export default function TeamBrowser(props) {
   const [teams, setTeams] = useState(null);
+  const [showNewTeamModal, setShowNewTeamModal] = useState(false)
   const navigate = useNavigate()
 
   function renderTeams() {
@@ -84,12 +87,14 @@ export default function TeamBrowser(props) {
                   </p>
                 </Alert>
               )}
-              
+              {props.user && !props.user.team && <div className='d-flex'><Button variant='dark' style={{marginLeft: 'auto'}} className='my-3' onClick={() => {setShowNewTeamModal(true)}}>Create New Team</Button></div>}
+              <h5 className='text-center'>All Teams</h5>
               <ListGroup variant="flush">{renderTeams()}</ListGroup>
             </Card.Body>
           </Card>
         </Col>
       </Row>
+      <NewTeamModal show={showNewTeamModal} onHide={() => {setShowNewTeamModal(false)}} user={props.user} setUser={props.setUser} />
     </Container>
   );
 }

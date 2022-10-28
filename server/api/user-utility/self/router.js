@@ -38,7 +38,7 @@ router.put('/', (req, res) => {
                 console.log(err)
                 res.status(500).json({err: err})
             } else {
-                req.session.passport.user = rows[0]
+                //req.session.passport.user = rows[0]
                 res.json(rows)
             }
         })

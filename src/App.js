@@ -25,7 +25,7 @@ export default function App(props) {
     {path: "/", element: <External user={user} />},
     {path: "/home", element: <Home user={user} setUser={setUser} />},
     {path: '/admin', element: <Admin user={user} />},
-    {path: '/teams', element: <TeamBrowser user={user}></TeamBrowser>},
+    {path: '/teams', element: <TeamBrowser user={user} setUser={setUser}></TeamBrowser>},
     {path: '/teams/:id', element: <Team user={user} setUser={setUser} />},
     {path: '/*', element: <NotFound />}
   ];
