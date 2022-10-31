@@ -2,6 +2,7 @@ const express = require('express')
 const userRouter = require('./user/router')
 const selfRouter = require('./self/router')
 const statsRouter = require('./stats/router')
+const tableRouter = require('./table/router')
 
 const router = express.Router()
 
@@ -12,5 +13,6 @@ const router = express.Router()
 router.use('/user', userRouter)
 router.use('/self', selfRouter)
 router.use('/stats', statsRouter)
+router.use('/table', tableRouter)
 
 module.exports = router

@@ -202,6 +202,23 @@
         }
       }
     },
+    "/api/user-utility/table/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/team-utility/team/": {
       "get": {
         "tags": [
