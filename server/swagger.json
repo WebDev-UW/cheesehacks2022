@@ -191,7 +191,13 @@
         ],
         "summary": "Loads the number of users that are in the database",
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "registered",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

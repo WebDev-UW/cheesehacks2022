@@ -17,7 +17,9 @@ export default function Admin(props) {
             <Col sm='10'>
                 <Tab.Content>
                     <Tab.Pane eventKey='users'>
+                        <React.StrictMode>
                         <UserManagement user={props.user} />
+                        </React.StrictMode>
                     </Tab.Pane>
                 </Tab.Content>
             </Col>

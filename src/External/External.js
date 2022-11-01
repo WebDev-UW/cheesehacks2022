@@ -10,7 +10,7 @@ export default function External(props) {
     const [countTeams, setCountTeams] = useState(null)
 
     useEffect(() => {
-      fetch('/api/user-utility/stats', {
+      fetch('/api/user-utility/stats?registered=1', {
         method: 'GET',
         headers: {"Content-Type": 'application/json'}
       })
@@ -228,7 +228,7 @@ export default function External(props) {
                 </Row>
                 <Row className="text-center">
                   <Col>
-                    {countUsers ? <h4 className="m-3">{countUsers}/150 enrolled</h4> : <Spinner animation='border' />}
+                    {countUsers ? <h4 className="m-3">{countUsers}/150 registered</h4> : <Spinner animation='border' />}
                   </Col>
                   <Col>
                     {countUsers ? <h4 className="m-3">{countTeams} team{countTeams == 1 ? "" : "s"}</h4> : <Spinner animation='border' />}

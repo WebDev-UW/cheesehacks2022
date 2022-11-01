@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
 
-root.render(<React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>);
+root.render(<BrowserRouter><App /></BrowserRouter>);
 
 if (module.hot) {
   module.hot.accept();
