@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -263,17 +264,17 @@ export default function Team(props) {
                 onClick={() => navigate("/teams")}
               >
                 {" "}
-                {"<-"} All Teams
+                <i className="bi bi-arrow-left-circle"></i>
               </Button>
               <Card.Body>
                 <Card.Title>{teamInfo[0].name}</Card.Title>
                 <p>{teamInfo[0].description}</p>
-                {props.user && !props.user.team && teamInfo[0] && teamInfo[0].user_ids && teamInfo[0].user_ids.split(',').length < 4 && (
+                {props.user && !props.user.team && props.user.registered && teamInfo[0] && teamInfo[0].user_ids && teamInfo[0].user_ids.split(',').length < 4 ? (
                   <Button onClick={() => joinTeam(params.id, setAsOf, props.user, props.setUser)}>
                     Join Team
                   </Button>
-                )}
-                {props.user && props.user.team === parseInt(params.id) && (
+                ) : <></>}
+                {props.user && props.user.team === parseInt(params.id) ? (
                   <Button
                     variant="outline-danger"
                     onClick={() => {
@@ -283,7 +284,8 @@ export default function Team(props) {
                   >
                     Leave Team
                   </Button>
-                )}
+                ) : <></>}
+                {props.user && !props.user.registered && <Alert variant='danger'>You must <Alert.Link href='/home'>register</Alert.Link> before joining a team</Alert>}
                 <p className="text-muted my-3">
                   Judging information, such as submitting your completed hack,
                   and the time of your presentation will appear on this page
