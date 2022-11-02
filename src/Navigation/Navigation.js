@@ -13,6 +13,7 @@ export default function Navigation(props) {
           <Nav.Link href='/#about'>About</Nav.Link>
           <Nav.Link href='/#sponsors'>Sponsors</Nav.Link>
           <Nav.Link href='/teams'>Teams</Nav.Link>
+          {props.user && props.user.admin === 1 ? <Nav.Link href='/admin'>Admin</Nav.Link> : <></>}
         </Nav>
         <Nav>
           <LoginButton user={props.user} />
