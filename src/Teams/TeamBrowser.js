@@ -87,7 +87,7 @@ export default function TeamBrowser(props) {
                   </p>
                 </Alert>
               )}
-              {props.user && !props.user.team && <div className='d-flex'><Button variant='dark' style={{marginLeft: 'auto'}} className='my-3' onClick={() => {setShowNewTeamModal(true)}}>Create New Team</Button></div>}
+              {props.user && !props.user.team && props.user.registered && <div className='d-flex'><Button variant='dark' style={{marginLeft: 'auto'}} className='my-3' onClick={() => {setShowNewTeamModal(true)}}>Create New Team</Button></div>}
               <h5 className='text-center'>All Teams</h5>
               <ListGroup variant="flush">{renderTeams()}</ListGroup>
             </Card.Body>

@@ -13,7 +13,8 @@ export default function Navigation(props) {
           <Nav.Link href='/#about'>About</Nav.Link>
           <Nav.Link href='/#sponsors'>Sponsors</Nav.Link>
           <Nav.Link href='/teams'>Teams</Nav.Link>
-          {props.user && props.user.admin === 1 ? <Nav.Link href='/admin'>Admin</Nav.Link> : <></>}
+          {props.user && props.user.registered ? <Nav.Link href='https://discord.gg/sHWBYKsakg'><i class="bi bi-discord"></i> Discord</Nav.Link> : <></>}
+          {props.user && props.user.admin === 1 ? <Nav.Link href='/admin'><i class="bi bi-tools"></i> Admin</Nav.Link> : <></>}
         </Nav>
         <Nav>
           <LoginButton user={props.user} />

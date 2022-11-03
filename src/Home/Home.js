@@ -7,6 +7,8 @@ import {
   Container,
   Spinner,
   Alert,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import NewTeamModal from "../Teams/NewTeamModal";
 import Registration from "./HomeComponents/Registration";
@@ -16,14 +18,35 @@ export default function Home(props) {
   const [showIncomplete, setShowIncomplete] = useState(true);
   const [showRegistered, setShowRegistered] = useState(true);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-  const [showNewTeamModal, setShowNewTeamModal] = useState(false)
+  const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [myTeam, setMyTeam] = useState(null);
   const [awhile, isAwhile] = useState(false);
+  const [countUsers, setCountUsers] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
       isAwhile(true);
     }, 5000);
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/user-utility/stats?registered=1", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        return res.ok
+          ? res.json()
+          : new Error(
+              "An unexpected error occurred while loading the number of users enrolled"
+            );
+      })
+      .then((data) => {
+        setCountUsers(data[0].count_of_users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
@@ -129,6 +152,8 @@ export default function Home(props) {
               additional information prior to the hackathon, we will contact you
               over email.
             </p>
+            <hr />
+            <p>Join the CheeseHacks 2022 Discord server to catch up on the latest updates: <Alert.Link href='https://discord.gg/sHWBYKsakg'>https://discord.gg/sHWBYKsakg</Alert.Link></p>
           </Alert>
         )}
         <Row>
@@ -145,8 +170,8 @@ export default function Home(props) {
                   </p>
                   <Container>
                     <Row>
-                      <Col sm="6" className='my-3'>
-                        <Card className="shadow" style={{height: '100%'}}>
+                      <Col sm="6" className="my-3">
+                        <Card className="shadow" style={{ height: "100%" }}>
                           <Card.Img
                             height="150px"
                             style={{ objectFit: "cover" }}
@@ -156,16 +181,37 @@ export default function Home(props) {
                           <Card.Body className="d-flex flex-column">
                             <Card.Title>Create Team</Card.Title>
                             <Card.Text>
-                              Create a new team and have friends join you in the hackathon. You do not have to know who else will be in your team when making the team.
+                              Create a new team and have friends join you in the
+                              hackathon. You do not have to know who else will
+                              be in your team when making the team.
                             </Card.Text>
-                            <Button variant="primary" className="mt-auto" onClick={() => setShowNewTeamModal(true)}>
-                              Create Team
-                            </Button>
+                            {props.user && props.user.registered ? (
+                              <Button
+                                variant="primary"
+                                className="mt-auto"
+                                onClick={() => setShowNewTeamModal(true)}
+                              >
+                                Create Team
+                              </Button>
+                            ) : (
+                              <OverlayTrigger
+                                placement="top"
+                                overlay={
+                                  <Tooltip>
+                                    You must register before creating a team
+                                  </Tooltip>
+                                }
+                              >
+                                <Button variant="primary" className="mt-auto">
+                                  Create Team
+                                </Button>
+                              </OverlayTrigger>
+                            )}
                           </Card.Body>
                         </Card>
                       </Col>
-                      <Col sm="6" className='my-3'>
-                        <Card className="shadow" style={{height: '100%'}}>
+                      <Col sm="6" className="my-3">
+                        <Card className="shadow" style={{ height: "100%" }}>
                           <Card.Img
                             height="150px"
                             style={{ objectFit: "cover" }}
@@ -175,7 +221,9 @@ export default function Home(props) {
                           <Card.Body className="d-flex flex-column">
                             <Card.Title>Join Team</Card.Title>
                             <Card.Text>
-                              Browse existing teams to see if anything interests you, or if you are looking to join a friend's team.
+                              Browse existing teams to see if anything interests
+                              you, or if you are looking to join a friend's
+                              team.
                             </Card.Text>
                             <Button
                               href="/teams"
@@ -200,9 +248,16 @@ export default function Home(props) {
                 <Card.Body>
                   <Card.Title>Team Management</Card.Title>
                   <p>
-                    You are currently a team member of <strong>{myTeam ? <a href={`/teams/${myTeam.id}`}>{myTeam.name}</a> : '...'}</strong>! You can{" "}
-                    <a href="/teams">manage your team membership</a> if you
-                    would like to leave or join a different team.
+                    You are currently a team member of{" "}
+                    <strong>
+                      {myTeam ? (
+                        <a href={`/teams/${myTeam.id}`}>{myTeam.name}</a>
+                      ) : (
+                        "..."
+                      )}
+                    </strong>
+                    ! You can <a href="/teams">manage your team membership</a>{" "}
+                    if you would like to leave or join a different team.
                   </p>
                 </Card.Body>
               </Card>
@@ -218,16 +273,54 @@ export default function Home(props) {
                   before. However, we will need some additional information
                   about you in order to make everything run smoothly.
                 </p>
-                {props.user && !props.user.registered ? (
-                  <Button
-                    variant="dark"
-                    onClick={() => {
-                      setShowRegistrationModal(true);
-                    }}
-                  >
-                    Register
-                  </Button>
-                ) : (
+
+                {props.user &&
+                  !props.user.registered &&
+                  countUsers &&
+                  countUsers < 150 && (
+                    <Button
+                      variant="dark"
+                      onClick={() => {
+                        setShowRegistrationModal(true);
+                      }}
+                    >
+                      Register
+                    </Button>
+                  )}
+                {props.user &&
+                  !props.user.registered &&
+                  countUsers > 149 &&
+                  !props.user.team && (
+                    <Alert>
+                      <Alert.Heading>Registration Closed</Alert.Heading>There
+                      are no more spots available for CheeseHacks this year. If
+                      you have any questions or concerns, contact{" "}
+                      <Alert.Link href="mailto:rswerner@wisc.edu">
+                        rswerner@wisc.edu
+                      </Alert.Link>{" "}
+                      for assistance
+                    </Alert>
+                  )}
+                {props.user &&
+                  !props.user.registered &&
+                  countUsers > 149 &&
+                  props.user.team && (
+                    <Alert variant='danger'>
+                      <Alert.Heading >Action Needed: Registration Error</Alert.Heading>There is
+                      an error in your registration. You have signed up for a
+                      team without registering to attend the event. As this was
+                      mainly an error on our part, we can try and accomodate you
+                      to the best of our ability. Please contact{" "}
+                      <Alert.Link href="mailto:rswerner@wisc.edu">
+                        rswerner@wisc.edu
+                      </Alert.Link>{" "}
+                      as soon as possible to correct your registration.
+                      <hr />
+                      Failure to correct this error in advance of the hackathon will forfeit your seat.
+                    </Alert>
+                  )}
+
+                {props.user && props.user.registered && (
                   <p style={{ color: "green" }}>
                     Registration Completed. Thank you!
                   </p>
@@ -244,7 +337,14 @@ export default function Home(props) {
           }}
           setUser={props.setUser}
         />
-        <NewTeamModal show={showNewTeamModal} onHide={() => {setShowNewTeamModal(false)}} user={props.user} setUser={props.setUser} />
+        <NewTeamModal
+          show={showNewTeamModal}
+          onHide={() => {
+            setShowNewTeamModal(false);
+          }}
+          user={props.user}
+          setUser={props.setUser}
+        />
       </Container>
     );
   } else {

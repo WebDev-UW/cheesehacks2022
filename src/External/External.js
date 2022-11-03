@@ -1,60 +1,74 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { Container, Row, Col, Card, Button, Accordion, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Accordion,
+  Spinner,
+} from "react-bootstrap";
 import Navigation from "../Navigation/Navigation";
 import Faqs from "./Faqs";
 
 export default function External(props) {
+  const [countUsers, setCountUsers] = useState(null);
+  const [countTeams, setCountTeams] = useState(null);
 
-    const [countUsers, setCountUsers] = useState(null)
-    const [countTeams, setCountTeams] = useState(null)
+  useEffect(() => {
+    fetch("/api/user-utility/stats?registered=1", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        return res.ok
+          ? res.json()
+          : new Error(
+              "An unexpected error occurred while loading the number of users enrolled"
+            );
+      })
+      .then((data) => {
+        setCountUsers(data[0].count_of_users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-    useEffect(() => {
-      fetch('/api/user-utility/stats?registered=1', {
-        method: 'GET',
-        headers: {"Content-Type": 'application/json'}
+  useEffect(() => {
+    fetch("/api/team-utility/stats", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        return res.ok
+          ? res.json()
+          : new Error(
+              "An unexpected error occurred while loading the number of teams"
+            );
       })
-      .then(res => {
-       return res.ok ? res.json() : new Error('An unexpected error occurred while loading the number of users enrolled') 
+      .then((data) => {
+        setCountTeams(data[0].count_of_teams);
       })
-      .then(data => {
-        setCountUsers(data[0].count_of_users)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    }, [])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-    useEffect(() => {
-      fetch('/api/team-utility/stats', {
-        method: 'GET',
-        headers: {"Content-Type": 'application/json'}
-      })
-      .then(res => {
-       return res.ok ? res.json() : new Error('An unexpected error occurred while loading the number of teams') 
-      })
-      .then(data => {
-        setCountTeams(data[0].count_of_teams)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    }, [])
+  const containerStyle = {
+    width: "100%",
+    height: "100%",
+  };
 
-    const containerStyle = {
-        width: "100%",
-        height: "100%",
-      };
-    
-    
-      const center = {
-        lat: 43.0719874,
-        lng: -89.4032545,
-      };
+  const center = {
+    lat: 43.0719874,
+    lng: -89.4032545,
+  };
 
-    return (
-        <div>
-    <Container fluid>
+  return (
+    <div>
+      <Container fluid>
         <Row
           style={{
             backgroundImage: 'url("/api/files/cheesehacks_main.jpg")',
@@ -86,9 +100,22 @@ export default function External(props) {
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button variant="dark" className="mt-3" href="/home">
-                      Register
-                    </Button>
+                    {countUsers && countUsers < 150 ? (
+                      <Button variant="dark" className="mt-3" href="/home">
+                        Register
+                      </Button>
+                    ) : (
+                      <div className="d-flex flex-column">
+                        <div className="m-auto">
+                          <Button variant="dark" className="mt-3" disabled>
+                            Register
+                          </Button>
+                        </div>
+                        <p className="text-muted">
+                          Registration Closed: All seats are full!
+                        </p>
+                      </div>
+                    )}
                   </Col>
                 </Row>
               </Container>
@@ -106,7 +133,7 @@ export default function External(props) {
                 minHeight: "30vh",
               }}
             >
-              <h1 id='about'>About</h1>
+              <h1 id="about">About</h1>
               <p className="m-4" style={{ fontSize: "1.3rem" }}>
                 CheeseHacks is a 24-hour hackathon that takes place over a fall
                 weekend on the UW-Madison Campus. We bring together students
@@ -228,17 +255,40 @@ export default function External(props) {
                 </Row>
                 <Row className="text-center">
                   <Col>
-                    {countUsers ? <h4 className="m-3">{countUsers}/150 registered</h4> : <Spinner animation='border' />}
+                    {countUsers ? (
+                      <h4 className="m-3">{countUsers}/150 registered</h4>
+                    ) : (
+                      <Spinner animation="border" />
+                    )}
                   </Col>
                   <Col>
-                    {countUsers ? <h4 className="m-3">{countTeams} team{countTeams == 1 ? "" : "s"}</h4> : <Spinner animation='border' />}
+                    {countUsers ? (
+                      <h4 className="m-3">
+                        {countTeams} team{countTeams == 1 ? "" : "s"}
+                      </h4>
+                    ) : (
+                      <Spinner animation="border" />
+                    )}
                   </Col>
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button variant="dark" className="mt-3" href='/home'>
-                      Register
-                    </Button>
+                  {countUsers && countUsers < 150 ? (
+                      <Button variant="dark" className="mt-3" href="/home">
+                        Register
+                      </Button>
+                    ) : (
+                      <div className="d-flex flex-column">
+                        <div className="m-auto">
+                          <Button variant="dark" className="mt-3" disabled>
+                            Register
+                          </Button>
+                        </div>
+                        <p className="text-muted">
+                          Registration Closed: All seats are full!
+                        </p>
+                      </div>
+                    )}
                   </Col>
                 </Row>
               </Card.Body>
@@ -257,17 +307,20 @@ export default function External(props) {
               </Card.Body>
             </Card>
           </Col>
-          <Col lg="6" className='d-flex'>
-            <Card className='my-5' style={{flexGrow: '1', minHeight: '500px'}}>
+          <Col lg="6" className="d-flex">
+            <Card
+              className="my-5"
+              style={{ flexGrow: "1", minHeight: "500px" }}
+            >
               <Card.Body>
                 <LoadScript googleMapsApiKey="AIzaSyClFNuBjB5lqtqPWEku0Go7Y_uSVwTfvEE">
-                  
                   <GoogleMap
-                   
                     mapContainerStyle={containerStyle}
                     center={center}
                     zoom={15}
-                  ><Marker position={center} title="CheeseHacks 2022"></Marker></GoogleMap>
+                  >
+                    <Marker position={center} title="CheeseHacks 2022"></Marker>
+                  </GoogleMap>
                 </LoadScript>
               </Card.Body>
             </Card>
@@ -275,17 +328,37 @@ export default function External(props) {
         </Row>
         <Row className="px-5">
           <Col>
-            <h1 className="text-center" id="sponsors">Sponsors</h1>
+            <h1 className="text-center" id="sponsors">
+              Sponsors
+            </h1>
             <Container>
-              <Row className='align-items-center'>
-                <Col xl='6'><img style={{width: '100%'}} className='my-3' src='/api/files/compsci.png'></img></Col>
-                <Col xl='6'><img style={{width: '100%'}} className='my-3' src='/api/files/genmills.png' /></Col>
+              <Row className="align-items-center">
+                <Col xl="4">
+                  <img
+                    style={{ width: "100%" }}
+                    className="my-3"
+                    src="/api/files/compsci.png"
+                  ></img>
+                </Col>
+                <Col xl="4">
+                  <img
+                    style={{ width: "100%" }}
+                    className="my-3"
+                    src="/api/files/genmills.png"
+                  />
+                </Col>
+                <Col xl="4">
+                  <img
+                    style={{ width: "100%" }}
+                    className="my-3"
+                    src="/api/files/Google.png"
+                  />
+                </Col>
               </Row>
             </Container>
-            
-            
-            
           </Col>
         </Row>
-      </Container></div>);
+      </Container>
+    </div>
+  );
 }
