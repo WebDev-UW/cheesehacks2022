@@ -83,7 +83,7 @@ if (process.env.NODE_ENV === "development") {
       description:
         "Development documentation for CheeseHacks that is automatically generated on server start. See swagger-autogen for how to document endpoints when writing API calls.",
     },
-    host: "localhost:3000",
+    host: `localhost:${process.env.PORT}`,
     schemes: ["http"],
   };
   swaggerAutogen(outputFile, endpointsFiles, doc);

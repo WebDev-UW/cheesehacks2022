@@ -5,7 +5,7 @@
     "description": "Development documentation for CheeseHacks that is automatically generated on server start. See swagger-autogen for how to document endpoints when writing API calls.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "localhost:2999",
   "basePath": "/",
   "schemes": [
     "http"
@@ -83,7 +83,13 @@
         ],
         "summary": "Returns all users in a JSON Array",
         "description": "Queries the user_entry database and returns all users without any related information.",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "expanded",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

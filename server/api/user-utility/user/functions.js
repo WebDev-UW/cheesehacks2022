@@ -4,9 +4,21 @@ const db = require("../../../db");
  * 
  * @returns Promise that resolves to a JSON array of all users
  */
-function getAllUsers() {
+function getAllUsers(expanded) {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM user_entry`, [], (err, rows) => {
+        db.query(`${!expanded ? `SELECT * FROM user_entry` : `SELECT 
+        user.*,
+        team.name AS team_name,
+        team.description AS team_description,
+        checkin.created_datetime AS checkin_datetime,
+        checkin.checkedin_by_id,
+        checkin.notes AS checkin_notes
+    FROM
+        user_entry AS user
+            LEFT JOIN
+        team_entry AS team ON user.team = team.id
+            LEFT JOIN
+        checkin_entry AS checkin ON user.id = checkin.user_id; `}`, [], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })

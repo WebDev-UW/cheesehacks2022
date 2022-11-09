@@ -7,7 +7,8 @@ router.get('/', (req, res, next) => {
     // #swagger.tags = ['user-utility/user']
     // #swagger.summary = 'Returns all users in a JSON Array'
     // #swagger.description = 'Queries the user_entry database and returns all users without any related information.'
-    getAllUsers()
+    const expanded = req.query.expanded
+    getAllUsers(expanded)
     .then(rows => {
         res.json(rows)
     })
