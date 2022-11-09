@@ -231,6 +231,59 @@
         }
       }
     },
+    "/api/user-utility/checkin/": {
+      "get": {
+        "tags": [
+          "user-utility/checkin"
+        ],
+        "summary": "Returns all checkins in a JSON Array",
+        "description": "Queries the checkin_entry database and returns all checkins without any related information.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user-utility/checkin"
+        ],
+        "summary": "Create a new checkin",
+        "description": "Creates a new checkin, using the provided user id in the body of the request",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "notes": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/team-utility/team/": {
       "get": {
         "tags": [
