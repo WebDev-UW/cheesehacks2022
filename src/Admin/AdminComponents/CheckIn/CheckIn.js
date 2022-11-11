@@ -10,6 +10,8 @@ import {
   Alert,
   Card,
   InputGroup,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import Fuse from "fuse.js";
 
@@ -18,6 +20,33 @@ export default function CheckIn(props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
+  const [notes, setNotes] = useState('')
+  const [asOf, setAsOf] = useState(new Date())
+
+  function completeCheckIn() {
+    fetch(`/api/user-utility/checkin`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id: selectedUser.id,
+        notes: notes
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        throw new Error('An unexpected error occurred')
+      }
+    })
+    .then(res => {
+      setAsOf(new Date())
+      setSelectedUser({})
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   useEffect(() => {
     fetch("/api/user-utility/user?expanded=1", {
@@ -36,7 +65,7 @@ export default function CheckIn(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [asOf]);
 
   useEffect(() => {
     if (users && users.length > 0) {
@@ -113,21 +142,35 @@ export default function CheckIn(props) {
                         <div
                           style={{ marginLeft: "auto", alignItems: "center" }}
                         >
-                          {result.item.registered === 1 && (
+                          {result.item.registered === 1 && !result.item.checkedin_by_id && (
                             <Button
                               size="sm"
                               variant="dark"
                               onClick={() => {
+                                setNotes('')
                                 setSelectedUser(result.item);
+                        
                               }}
                             >
                               Check In
                             </Button>
                           )}
+                          {result.item.registered === 1 && result.item.checkedin_by_id && (
+                            <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>Check-In completed at {new Date(result.item.checkin_datetime).toLocaleTimeString()}</Tooltip>}
+                          >
+                            <i className="bi bi-check-circle-fill text-success"></i>
+                          </OverlayTrigger>
+                          )}
                           {result.item.registered === 0 && (
-                            <span style={{ color: "red" }}>
-                              <small>Registration Incomplete</small>
-                            </span>
+                            
+                            <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>User did not complete registration.</Tooltip>}
+                          >
+                            <i className="bi bi-exclamation-circle-fill text-danger"></i>
+                          </OverlayTrigger>
                           )}
                         </div>
                       </ListGroup.Item>
@@ -235,9 +278,9 @@ export default function CheckIn(props) {
                     <hr />
                     <h5>Complete Check-In</h5>
                     <p>If any of the above information is incorrect, please note below. Click submit to finish the check-in process.</p>
-                    <InputGroup as='textarea' />
+                    <InputGroup as='textarea' value={notes} onChange={e => {setNotes(e.target.value)}} />
                     <div className='d-flex flex-row justify-content-center'>
-                    <Button variant="success m-3">Submit</Button>
+                    <Button variant="success m-3" onClick={() => completeCheckIn()}>Submit</Button>
                     </div>
                   </Card.Body>
                 </Card>
