@@ -5,7 +5,7 @@
     "description": "Development documentation for CheeseHacks that is automatically generated on server start. See swagger-autogen for how to document endpoints when writing API calls.",
     "version": "1.0.0"
   },
-  "host": "localhost:2999",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
     "http"
