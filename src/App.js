@@ -15,6 +15,7 @@ import External from "./External/External";
 import NotFound from "./NotFound";
 import TeamBrowser from "./Teams/TeamBrowser";
 import Team from "./Team/Team";
+import CheckinDash from "./Dashboards/CheckinDash";
 
 
 
@@ -27,6 +28,7 @@ export default function App(props) {
     {path: '/admin', element: <Admin user={user} />},
     {path: '/teams', element: <TeamBrowser user={user} setUser={setUser}></TeamBrowser>},
     {path: '/teams/:id', element: <Team user={user} setUser={setUser} />},
+    {path: '/checkins', element: <CheckinDash user={user} />},
     {path: '/*', element: <NotFound />}
   ];
 
