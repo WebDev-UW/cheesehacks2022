@@ -293,6 +293,8 @@ export default function Team(props) {
                 </p>
               </Card.Body>
             </Card>
+              {/* have submission instructions here that only shows up if the user is the team captain. Allow captain to upload solution to website */}
+              
           </Col>
           <Col md="4">
             <Card className="my-3 shadow">
