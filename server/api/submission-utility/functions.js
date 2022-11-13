@@ -1,19 +1,48 @@
-const db = require("../../../db")
+const db = require("../../db")
 
-function insertSubmission(team_id, file_location, user_id) {
+
+/**
+ * 
+ * @param {Number} team_id The id of the team
+ * @param {String} file_location The file location
+ * @param {Number} user_id The id of the user that is submitting the project
+ * @returns Promise that resolves to information about the inserted row
+ */
+function insertSubmission(team_id, file_location, user_id, url) {
     return new Promise((resolve, reject) => {
-        db.query(`INSERT INTO Submissions (team_id, created_timestamp, file_location, user_id) VALUES (?, ?, ?, ?)`, [team_id, Date.now(), user_id, file_location], (err, rows) => {
+        db.query(`INSERT INTO submission_entry (team_id, file_location, user_id, url) VALUES (?, ?, ?, ?)`, [team_id, file_location, user_id, url], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
 }
 
+/**
+ * 
+ * @returns Promise that resolves to all submission entry details
+ */
 function getSubmissionDetails() {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM Submissions', [team_id], (err, rows) => {
-            err ? reject(err) : resolve(rows[0])
+        db.query('SELECT * FROM submission_entry', [], (err, rows) => {
+            err ? reject(err) : resolve(rows)
         })
     })
 }
 
-module.exports = {insertSubmission, getSubmissionDetails}
+/**
+ * 
+ * @param {Number} team_id The id of the team that you would like to get submissions from 
+ * @returns Promise that resolves to all submission data for your team
+ */
+function getSubmissionDetailsOfTeam(team_id) {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM submission_entry WHERE team_id = ?`, [team_id], (err, rows) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(rows)
+            }
+        })
+    })
+}
+
+module.exports = {insertSubmission, getSubmissionDetails, getSubmissionDetailsOfTeam}

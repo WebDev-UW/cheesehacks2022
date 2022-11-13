@@ -10,11 +10,40 @@ import {
   Placeholder,
   Row,
   Spinner,
+  Table,
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import NotFound from "../NotFound";
 import DisbandModal from "./DisbandModal";
 import RemoveModal from "./RemoveModal";
+import SubmitSubmission from "./SubmitSubmission";
+
+
+function submitProject(file, url, setAsOf, team_id, onHide) {
+  fetch('/api/submission-utility/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      file_location: file,
+      url: url,
+      team_id: team_id
+    })
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json()
+    } else {
+      throw new Error('An unexpected error occurred')
+    }
+  })
+  .then(res => {
+    setAsOf(new Date())
+    onHide()
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
 
 function loadUser(id) {
   return new Promise((resolve, reject) => {
@@ -55,15 +84,14 @@ function leaveTeam(setAsOf, user, setUser) {
     method: "DELETE",
   })
     .then((res) => {
-        if (res.ok) {
-            
-            const userCopy = JSON.parse(JSON.stringify(user))
-            userCopy.team = null
-            setUser(userCopy)
-            setAsOf(new Date())
-          } else {
-            throw new Error("An unexpected error occurred");
-          }
+      if (res.ok) {
+        const userCopy = JSON.parse(JSON.stringify(user));
+        userCopy.team = null;
+        setUser(userCopy);
+        setAsOf(new Date());
+      } else {
+        throw new Error("An unexpected error occurred");
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -78,11 +106,10 @@ function joinTeam(teamId, setAsOf, user, setUser) {
   })
     .then((res) => {
       if (res.ok) {
-        
-        const userCopy = JSON.parse(JSON.stringify(user))
-        userCopy.team = parseInt(teamId)
-        setUser(userCopy)
-        setAsOf(new Date())
+        const userCopy = JSON.parse(JSON.stringify(user));
+        userCopy.team = parseInt(teamId);
+        setUser(userCopy);
+        setAsOf(new Date());
       } else {
         throw new Error("An unexpected error occurred");
       }
@@ -96,19 +123,19 @@ function disbandTeam(teamId, setAsOf, user, setUser, navigate) {
   fetch(`/api/team-utility/team/${teamId}`, {
     method: "DELETE",
   })
-  .then(res => {
-    if (res.ok) {
-      const userCopy = JSON.parse(JSON.stringify(user))
-        userCopy.team = null
-        setUser(userCopy)
-        navigate('/teams')
-    } else {
-      throw new Error('An unexpected error occurred')
-    }
-  })
-  .catch(err => {
-    console.log(err)
-  })
+    .then((res) => {
+      if (res.ok) {
+        const userCopy = JSON.parse(JSON.stringify(user));
+        userCopy.team = null;
+        setUser(userCopy);
+        navigate("/teams");
+      } else {
+        throw new Error("An unexpected error occurred");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function renderMember(member, asCaptain, user, setShowRemoveModal) {
@@ -124,7 +151,7 @@ function renderMember(member, asCaptain, user, setShowRemoveModal) {
           src={member.profile_picture_url}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null; // prevents looping
-            currentTarget.src=`/api/files/favicon.ico`;
+            currentTarget.src = `/api/files/favicon.ico`;
           }}
         ></img>
       </div>
@@ -157,13 +184,15 @@ export default function Team(props) {
   const [members, setMembers] = useState(null);
   const [asCaptain, setAsCaptain] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
-  const [showDisbandModal, setShowDisbandModal] = useState(false)
+  const [showDisbandModal, setShowDisbandModal] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [submissions, setSubmissions] = useState([]);
+  const [showSubmissionModal, setShowSubmissionModal] = useState(false)
   const [asOf, setAsOf] = useState(new Date());
   const navigate = useNavigate();
 
   useEffect(() => {
-    setMembers(null)
+    setMembers(null);
     if (
       teamInfo &&
       teamInfo[0] &&
@@ -176,7 +205,7 @@ export default function Team(props) {
         setMembers(data);
       });
     } else {
-        setMembers([])
+      setMembers([]);
     }
   }, [teamInfo]);
 
@@ -228,6 +257,28 @@ export default function Team(props) {
     }
   }, [props, teamCaptain]);
 
+  useEffect(() => {
+    if (props.user && parseInt(props.user.team) === parseInt(params.id)) {
+      fetch(`/api/submission-utility/${parseInt(params.id)}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error("an unexpected error occurred");
+          }
+        })
+        .then((res) => {
+          setSubmissions(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [props.user, params.id, asOf]);
+
   if (teamInfo === null) {
     return (
       <Container>
@@ -269,32 +320,84 @@ export default function Team(props) {
               <Card.Body>
                 <Card.Title>{teamInfo[0].name}</Card.Title>
                 <p>{teamInfo[0].description}</p>
-                {props.user && !props.user.team && props.user.registered && teamInfo[0] && teamInfo[0].user_ids && teamInfo[0].user_ids.split(',').length < 4 ? (
-                  <Button onClick={() => joinTeam(params.id, setAsOf, props.user, props.setUser)}>
+                {props.user &&
+                !props.user.team &&
+                props.user.registered &&
+                teamInfo[0] &&
+                teamInfo[0].user_ids &&
+                teamInfo[0].user_ids.split(",").length < 4 ? (
+                  <Button
+                    onClick={() =>
+                      joinTeam(params.id, setAsOf, props.user, props.setUser)
+                    }
+                  >
                     Join Team
                   </Button>
-                ) : <></>}
+                ) : (
+                  <></>
+                )}
                 {props.user && props.user.team === parseInt(params.id) ? (
                   <Button
                     variant="outline-danger"
                     onClick={() => {
                       leaveTeam(setAsOf, props.user, props.setUser);
                     }}
-                    disabled={teamInfo[0] && parseInt(props.user.id) === teamInfo[0].team_captain}
+                    disabled={
+                      teamInfo[0] &&
+                      parseInt(props.user.id) === teamInfo[0].team_captain
+                    }
                   >
                     Leave Team
                   </Button>
-                ) : <></>}
-                {props.user && !props.user.registered && <Alert variant='danger'>You must <Alert.Link href='/home'>register</Alert.Link> before joining a team</Alert>}
-                <p className="text-muted my-3">
-                  Judging information, such as submitting your completed hack,
-                  and the time of your presentation will appear on this page
-                  once the hackathon begins.
-                </p>
+                ) : (
+                  <></>
+                )}
+                {props.user && !props.user.registered && (
+                  <Alert variant="danger">
+                    You must <Alert.Link href="/home">register</Alert.Link>{" "}
+                    before joining a team
+                  </Alert>
+                )}
+                {props.user &&
+                  parseInt(props.user.team) === parseInt(params.id) && (
+                    <div>
+                      {submissions && submissions.length > 0 ? (
+                        <div className='d-flex flex-column'>
+                          <Button className='my-5' onClick={e => setShowSubmissionModal(true)}>New Submission</Button>
+                          <Table>
+                            <thead>
+                              <tr>
+                                <th>Submission Time</th>
+                                <th>Project File</th>
+                                <th>Repository Source</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {submissions.map((submission, i) => {
+                                return (
+                                  <tr key={i}>
+                                    <td>
+                                      {new Date(
+                                        submission.created_datetime
+                                      ).toLocaleString()}
+                                    </td>
+                                    <td><a href={submission.file_location} style={{overflowWrap: 'anywhere'}}>{submission.file_location}</a></td>
+                                    <td><a href={submission.url}>{submission.url}</a></td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </Table>
+                        </div>
+                      ) : (
+                        <div className='d-flex flex-column'> <Button className='my-5' onClick={e => setShowSubmissionModal(true)}>New Submission</Button>
+                        <p>You have not submitted your hack! You can submit as many times as you need to, so we recommend submitting early and often!</p></div>
+                      )}
+                    </div>
+                  )}
               </Card.Body>
             </Card>
-              {/* have submission instructions here that only shows up if the user is the team captain. Allow captain to upload solution to website */}
-              
+            {/* have submission instructions here that only shows up if the user is the team captain. Allow captain to upload solution to website */}
           </Col>
           <Col md="4">
             <Card className="my-3 shadow">
@@ -311,14 +414,31 @@ export default function Team(props) {
                   The Team captain reserves the right to remove any members of
                   their team as they see fit
                 </p>
-                {props.user && parseInt(teamInfo[0].team_captain) === props.user.id ? <div className='d-flex'><Button style={{margin: 'auto'}} variant='outline-danger' onClick={() => {setShowDisbandModal(true)}}>Disband Team</Button></div> : <></>}
+                {props.user &&
+                parseInt(teamInfo[0].team_captain) === props.user.id ? (
+                  <div className="d-flex">
+                    <Button
+                      style={{ margin: "auto" }}
+                      variant="outline-danger"
+                      onClick={() => {
+                        setShowDisbandModal(true);
+                      }}
+                    >
+                      Disband Team
+                    </Button>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </Card.Body>
             </Card>
             <Card className="my-3 shadow">
               <Card.Body>
                 <Card.Title>
                   Members{" "}
-                  {members && <Badge variant="dark">{members.length} / 4</Badge>}
+                  {members && (
+                    <Badge variant="dark">{members.length} / 4</Badge>
+                  )}
                 </Card.Title>
                 <ListGroup variant="flush">
                   {members && members.length > 0 ? (
@@ -338,7 +458,9 @@ export default function Team(props) {
                   ) : (
                     <></>
                   )}
-                  {!members && <Spinner className="m-auto my-3" animation="border" />}
+                  {!members && (
+                    <Spinner className="m-auto my-3" animation="border" />
+                  )}
                 </ListGroup>
               </Card.Body>
             </Card>
@@ -354,7 +476,21 @@ export default function Team(props) {
             setShowRemoveModal(false);
           }}
         />
-        <DisbandModal show={showDisbandModal} onHide={() => setShowDisbandModal(false)} confirm={() => {disbandTeam(params.id, setAsOf, props.user, props.setUser, navigate); setShowDisbandModal(false)}} />
+        <DisbandModal
+          show={showDisbandModal}
+          onHide={() => setShowDisbandModal(false)}
+          confirm={() => {
+            disbandTeam(
+              params.id,
+              setAsOf,
+              props.user,
+              props.setUser,
+              navigate
+            );
+            setShowDisbandModal(false);
+          }}
+        />
+        <SubmitSubmission show={showSubmissionModal} onHide={() => {setShowSubmissionModal(false)}} submitProject={submitProject} setAsOf={setAsOf} team_id={params.id} />
       </Container>
     );
   }
