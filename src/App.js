@@ -16,6 +16,7 @@ import NotFound from "./NotFound";
 import TeamBrowser from "./Teams/TeamBrowser";
 import Team from "./Team/Team";
 import CheckinDash from "./Dashboards/CheckinDash";
+import JudgeDash from "./Dashboards/JudgeDash";
 
 
 
@@ -29,6 +30,7 @@ export default function App(props) {
     {path: '/teams', element: <TeamBrowser user={user} setUser={setUser}></TeamBrowser>},
     {path: '/teams/:id', element: <Team user={user} setUser={setUser} />},
     {path: '/checkins', element: <CheckinDash user={user} />},
+    {path: '/schedule', element: <JudgeDash />},
     {path: '/*', element: <NotFound />}
   ];
 
