@@ -601,7 +601,13 @@
         ],
         "summary": "Load all submissions",
         "description": "Loads all submissions that have been created on the website",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "withTeams",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

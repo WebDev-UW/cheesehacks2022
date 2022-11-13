@@ -1,5 +1,5 @@
 const express = require('express')
-const { getSubmissionDetails, insertSubmission, getSubmissionDetailsOfTeam } = require('./functions')
+const { getSubmissionDetails, insertSubmission, getSubmissionDetailsOfTeam, getSubmissionsWithTeamInfo } = require('./functions')
 
 const router = express.Router()
 
@@ -42,14 +42,24 @@ router.get('/', (req, res) => {
     // #swagger.tags = ['submission-utility']
     // #swagger.summary = 'Load all submissions'
     // #swagger.description = 'Loads all submissions that have been created on the website'
-
-    getSubmissionDetails()
+    if (req.query.withTeams) {
+        getSubmissionsWithTeamInfo()
+        .then(rows => {
+            res.json(rows)
+        })
+        .catch(err => {
+            res.status(500).json({err: err})
+        })
+    } else {
+        getSubmissionDetails()
     .then(rows => {
         res.json(rows)
     })
     .catch(err => {
         res.status(500).json({err: err})
     })
+    }
+    
 })
 
 module.exports = router

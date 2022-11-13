@@ -45,4 +45,16 @@ function getSubmissionDetailsOfTeam(team_id) {
     })
 }
 
-module.exports = {insertSubmission, getSubmissionDetails, getSubmissionDetailsOfTeam}
+function getSubmissionsWithTeamInfo() {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT team.*, COUNT(submission.team_id) AS count FROM team_entry AS team JOIN submission_entry AS submission ON team.id = submission.team_id GROUP BY team.id;', [], (err, rows) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(rows)
+            }
+        })
+    })
+}
+
+module.exports = {insertSubmission, getSubmissionDetails, getSubmissionDetailsOfTeam, getSubmissionsWithTeamInfo}
