@@ -258,7 +258,7 @@ export default function Team(props) {
   }, [props, teamCaptain]);
 
   useEffect(() => {
-    if (props.user && parseInt(props.user.team) === parseInt(params.id)) {
+    if (props.user && (parseInt(props.user.team) === parseInt(params.id) || props.user.admin)) {
       fetch(`/api/submission-utility/${parseInt(params.id)}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -360,7 +360,7 @@ export default function Team(props) {
                 )}
                 {teamInfo[0] && teamInfo[0].judge_time && <Alert className='my-3' variant="warning"><Alert.Heading>Judging Scheduled!</Alert.Heading><p>This team is scheduled to be judged at <strong>{new Date(teamInfo[0].judge_time).toLocaleString()} in {teamInfo[0].judge_location}</strong>. </p><p>Please wait outside of the judging room until you are let in by the judge. Be ready to explain your project and answer any questions.</p></Alert>}
                 {props.user &&
-                  parseInt(props.user.team) === parseInt(params.id) && (
+                  (parseInt(props.user.team) === parseInt(params.id) || props.user.admin === 1) && (
                     <div>
                       {submissions && submissions.length > 0 ? (
                         <div className='d-flex flex-column'>
