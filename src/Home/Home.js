@@ -113,7 +113,7 @@ export default function Home(props) {
               delete data than is available to registrants. You can also access
               additional information using the{" "}
               <Alert.Link href="/admin">administrator dashboard</Alert.Link>.
-              Please contact Ryan S Werner (rswerner@wisc.edu) with any
+              Please contact Ethan Yan (eyyan@wisc.edu) with any
               questions or concerns.
             </p>
           </Alert>
@@ -295,8 +295,8 @@ export default function Home(props) {
                       <Alert.Heading>Registration Closed</Alert.Heading>There
                       are no more spots available for CheeseHacks this year. If
                       you have any questions or concerns, contact{" "}
-                      <Alert.Link href="mailto:rswerner@wisc.edu">
-                        rswerner@wisc.edu
+                      <Alert.Link href="mailto:eyyan@wisc.edu">
+                        eyyan@wisc.edu
                       </Alert.Link>{" "}
                       for assistance
                     </Alert>
@@ -311,8 +311,8 @@ export default function Home(props) {
                       team without registering to attend the event. As this was
                       mainly an error on our part, we can try and accomodate you
                       to the best of our ability. Please contact{" "}
-                      <Alert.Link href="mailto:rswerner@wisc.edu">
-                        rswerner@wisc.edu
+                      <Alert.Link href="mailto:eyyan@wisc.edu">
+                        eyyan@wisc.edu
                       </Alert.Link>{" "}
                       as soon as possible to correct your registration.
                       <hr />
@@ -320,10 +320,12 @@ export default function Home(props) {
                     </Alert>
                   )}
 
-                {props.user && props.user.registered && (
+                {props.user?.registered ? (
                   <p style={{ color: "green" }}>
                     Registration Completed. Thank you!
                   </p>
+                ) : (
+                  ""
                 )}
               </Card.Body>
             </Card>

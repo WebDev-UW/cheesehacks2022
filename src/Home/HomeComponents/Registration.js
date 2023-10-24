@@ -195,7 +195,7 @@ export default function Registration(props) {
           <Row className='my-3'>
             <Col>
               <h5>Confirmation</h5>
-              <Form.Text>By checking the box below, you agree that you will attend the hackathon occurring on Saturday, November 12th at 12:00 PM to Sunday, November 13th at 12:00 PM (24 hours). You are not required to stay the entire duration of the hackathon, but fully intend on working on and submitting a hack during this time period.</Form.Text>
+              <Form.Text>By checking the box below, you agree that you will attend the hackathon occurring on Saturday, November 4th at 1:00 PM to Sunday, November 5th at 1:00 PM (24 hours). You are not required to stay the entire duration of the hackathon, but fully intend on working on and submitting a hack during this time period.</Form.Text>
             </Col>
           </Row>
           <Row>

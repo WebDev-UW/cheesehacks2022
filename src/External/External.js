@@ -89,13 +89,13 @@ export default function External(props) {
                     <img
                       src="/api/files/CheeseHacks.jpg"
                       width="100%"
-                      alt="CheeseHacks 2022"
+                      alt="CheeseHacks 2023"
                     ></img>
                   </Col>
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <h3>11.12.22 - 11.13.22</h3>
+                    <h3>11.04.23 - 11.05.23</h3>
                   </Col>
                 </Row>
                 <Row>
@@ -319,7 +319,7 @@ export default function External(props) {
                     center={center}
                     zoom={15}
                   >
-                    <Marker position={center} title="CheeseHacks 2022"></Marker>
+                    <Marker position={center} title="CheeseHacks 2023"></Marker>
                   </GoogleMap>
                 </LoadScript>
               </Card.Body>
