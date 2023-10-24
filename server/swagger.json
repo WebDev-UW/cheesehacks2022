@@ -214,6 +214,24 @@
         }
       }
     },
+    "/api/user-utility/stats/participants": {
+      "get": {
+        "tags": [
+          "user-utility/stats"
+        ],
+        "summary": "Loads the number of users that are in the database",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/user-utility/table/": {
       "get": {
         "description": "",

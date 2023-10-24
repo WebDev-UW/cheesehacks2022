@@ -17,7 +17,7 @@ export default function External(props) {
   const [countTeams, setCountTeams] = useState(null);
 
   useEffect(() => {
-    fetch("/api/user-utility/stats?registered=1", {
+    fetch("/api/user-utility/stats/participants", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
