@@ -6,7 +6,7 @@ import LoginButton from './NavigationComponents/LoginButton'
 export default function Navigation(props) {
     return (<Navbar sticky="top" collapseOnSelect expand="lg" bg='dark' variant='dark'>
     <Container>
-      <Navbar.Brand href="/">CheeseHacks 2022</Navbar.Brand>
+      <Navbar.Brand href="/">CheeseHacks 2023</Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
         <Nav className="me-auto">
