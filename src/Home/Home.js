@@ -129,7 +129,7 @@ export default function Home(props) {
           >
             <Alert.Heading>Registration Incomplete</Alert.Heading>
             <p>
-              You have not completed your registration for CheeseHacks 2022.
+              You have not completed your registration for CheeseHacks 2023.
               Please fill out the registration form so that you can secure your
               spot at the hackathon.
             </p>
@@ -153,7 +153,7 @@ export default function Home(props) {
               over email.
             </p>
             <hr />
-            <p>Join the CheeseHacks 2022 Discord server to catch up on the latest updates: <Alert.Link href='https://discord.gg/sHWBYKsakg'>https://discord.gg/sHWBYKsakg</Alert.Link></p>
+            <p>Join the CheeseHacks 2023 Discord server to catch up on the latest updates: <Alert.Link href='https://discord.gg/sHWBYKsakg'>https://discord.gg/sHWBYKsakg</Alert.Link></p>
           </Alert>
         )}
         <Row>
@@ -268,7 +268,7 @@ export default function Home(props) {
               <Card.Body>
                 <Card.Title>Registration</Card.Title>
                 <p>
-                  Thank you for your interest in CheeseHacks 2022! We are
+                  Thank you for your interest in CheeseHacks 2023! We are
                   excited and prepared to have more hackers this year than ever
                   before. However, we will need some additional information
                   about you in order to make everything run smoothly.

@@ -344,13 +344,6 @@ export default function External(props) {
                   <img
                     style={{ width: "100%" }}
                     className="my-3"
-                    src="/api/files/genmills.png"
-                  />
-                </Col>
-                <Col xl="4">
-                  <img
-                    style={{ width: "100%" }}
-                    className="my-3"
                     src="/api/files/Google.png"
                   />
                 </Col>

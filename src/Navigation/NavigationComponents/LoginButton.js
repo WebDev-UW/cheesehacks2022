@@ -12,7 +12,7 @@ export default function LoginButton(props) {
     );
   } else if (props.user === false) {
     return <Nav.Link href='/login'>Login</Nav.Link>;
-  } else if (props.user && props.user.id) {
+  } else if (props.user?.id) {
     return (
       <Nav.Link href="/home">
         <div>
