@@ -100,7 +100,7 @@ export default function External(props) {
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    {countUsers && countUsers < 150 ? (
+                    {countUsers !== null && countUsers < 150 ? (
                       <Button variant="dark" className="mt-3" href="/home">
                         Register
                       </Button>
@@ -255,14 +255,14 @@ export default function External(props) {
                 </Row>
                 <Row className="text-center">
                   <Col>
-                    {countUsers ? (
+                    {countUsers !== null ? (
                       <h4 className="m-3">{countUsers}/150 registered</h4>
                     ) : (
                       <Spinner animation="border" />
                     )}
                   </Col>
                   <Col>
-                    {countUsers ? (
+                    {countUsers !== null ? (
                       <h4 className="m-3">
                         {countTeams} team{countTeams == 1 ? "" : "s"}
                       </h4>
@@ -273,7 +273,7 @@ export default function External(props) {
                 </Row>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                  {countUsers && countUsers < 150 ? (
+                  {countUsers !== null && countUsers < 150 ? (
                       <Button variant="dark" className="mt-3" href="/home">
                         Register
                       </Button>

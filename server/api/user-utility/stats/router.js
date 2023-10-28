@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
 router.get('/participants', (req, res) => {
     // #swagger.tags = ["user-utility/stats"]
-    // #swagger.summary = "Loads the number of users that are in the database"
+    // #swagger.summary = "Loads the number of participants that are in the database"
     getNumParticipants()
     .then(rows => {
         res.json(rows)

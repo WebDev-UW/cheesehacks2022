@@ -219,7 +219,7 @@
         "tags": [
           "user-utility/stats"
         ],
-        "summary": "Loads the number of users that are in the database",
+        "summary": "Loads the number of participants that are in the database",
         "description": "",
         "parameters": [],
         "responses": {

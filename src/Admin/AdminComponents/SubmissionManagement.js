@@ -65,11 +65,36 @@ export default function SubmissionManagement(props) {
   const [startingTime, setStartingTime] = useState(new Date())
   const [timeInterval, setTimeInterval] = useState(10)
   const [schedules, setSchedules] = useState([[], [], []]);
-  const rooms = ['EdSci Room 212', 'EdSci Room 218', 'EdSci Room 228']
+  // const rooms = ['EdSci Room 212', 'EdSci Room 218', 'EdSci Room 228']
+  const [rooms, setRooms] = useState(['Room 1', 'Room 2', 'Room 3']);
+
+  const handleRoomNameChange = (e, index) => {
+    const updatedRooms = [...rooms]; 
+    updatedRooms[index] = e.target.value; 
+    setRooms(updatedRooms); 
+  };
+
+  const handleNumberOfRoomsChange = (e) => {
+    const numberOfRooms = parseInt(e.target.value, 10);
+    
+    if (!isNaN(numberOfRooms) && numberOfRooms >= 0) {
+      const updatedRooms = [...rooms]; 
+      
+      if (numberOfRooms < rooms.length) {
+        updatedRooms.length = numberOfRooms; 
+      } else if (numberOfRooms > rooms.length) {
+        const lastRoomNum = rooms.length;
+        updatedRooms.push(`Room ${lastRoomNum + 1}`);
+      }
+  
+      setRooms(updatedRooms);
+    }
+  };
+   
 
   function confirmJudging() {
     const promises = []
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < rooms.length; i++) {
         schedules[i].forEach(team => {
             team.judge_time = toSqlDatetime(team.judge_time);
             delete team.created_datetime
@@ -178,6 +203,24 @@ export default function SubmissionManagement(props) {
                         <Form.Label>Time Intervals</Form.Label>
                         <Form.Control type='number' value={timeInterval} onChange={e => {setTimeInterval(e.target.value)}}></Form.Control>
                     </Form.Group>
+                    <Form.Group controlId="number-of-rooms">
+                      <Form.Label>Number of Rooms</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={rooms.length} // The current number of rooms
+                        onChange={(e) => handleNumberOfRoomsChange(e)}
+                      />
+                    </Form.Group>
+                    {rooms.map((room, index) => (
+                      <Form.Group key={index} controlId={`room-name-${index}`}>
+                        <Form.Label>Room {index + 1} Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={rooms[index]}
+                          onChange={(e) => handleRoomNameChange(e, index)}
+                        />
+                      </Form.Group>
+                    ))}
                 </Form>
                 <hr />
               <h4>Proposed Schedule</h4>
