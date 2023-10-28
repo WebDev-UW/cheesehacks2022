@@ -75,8 +75,8 @@ export default function Faqs(props) {
       <Accordion.Item eventKey="4">
         <Accordion.Header>When and where is the hackathon?</Accordion.Header>
         <Accordion.Body>
-          The hackathon is planned for Saturday, November 12th at noon to
-          Sunday, November 13th at noon. After the hackathon ends, judging will
+          The hackathon is planned for Saturday, November 4th at 1pm to
+          Sunday, November 5th at 11am. After the hackathon ends, judging will
           be performed and you may be asked to give a presentation to win awards
           or prizes.
           <br />
@@ -123,7 +123,7 @@ export default function Faqs(props) {
         </Accordion.Header>
         <Accordion.Body>
           No, please reserve all your work for the official start time on Nov
-          12th.
+          4th.
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
