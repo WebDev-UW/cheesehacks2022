@@ -264,7 +264,7 @@ export default function External(props) {
                   <Col>
                     {countUsers !== null ? (
                       <h4 className="m-3">
-                        {countTeams} team{countTeams == 1 ? "" : "s"}
+                        {countTeams - 1} team{countTeams == 2 ? "" : "s"}
                       </h4>
                     ) : (
                       <Spinner animation="border" />
