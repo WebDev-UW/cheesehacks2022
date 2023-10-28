@@ -42,6 +42,6 @@ Deployment Steps:
 
 1. In the cheesehacks folder, first run `git pull` to get latest updates.
 2. Run `npm install`.
-3. Run `npm build`.
+3. Run `npm run build`.
 4. Run `sudo systemctl restart cheesehacks2022.service`
 5. Run `sudo systemctl status cheesehacks2022.service`
