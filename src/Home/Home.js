@@ -153,7 +153,7 @@ export default function Home(props) {
               over email.
             </p>
             <hr />
-            <p>Join the CheeseHacks 2023 Discord server to catch up on the latest updates: <Alert.Link href='https://discord.gg/sHWBYKsakg'>https://discord.gg/sHWBYKsakg</Alert.Link></p>
+            <p>Join the CheeseHacks 2023 Discord server to catch up on the latest updates: <Alert.Link href='https://discord.gg/hdbccFt4'>https://discord.gg/hdbccFt4</Alert.Link></p>
           </Alert>
         )}
         <Row>
