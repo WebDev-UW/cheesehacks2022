@@ -14,7 +14,7 @@ Main Contributors: Ryan Werner, Drew Zimmerman, Andrew Dai, Ethan Yan
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- Credits [Credits] (#credits)
+- [Credits](#credits)
 
 ## Getting Started
 
