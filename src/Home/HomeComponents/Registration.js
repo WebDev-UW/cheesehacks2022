@@ -62,7 +62,7 @@ export default function Registration(props) {
       <Modal.Body>
         {error ? <Alert variant='danger'>
             <Alert.Heading>Error</Alert.Heading>
-            <p>An unexpected error occurred. Please contact rswerner@wisc.edu</p>
+            <p>An unexpected error occurred. Please contact eyyan@wisc.edu</p>
             </Alert> : <></>}
         <Form>
           <Row>

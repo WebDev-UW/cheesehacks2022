@@ -23,11 +23,11 @@ export default function TeamBrowser(props) {
         return (
           <ListGroup.Item key={team.id} action onClick={() => {navigate(`/teams/${team.id}`)}}>
             <div className='d-flex justify-content-between align-items-center'>
-            <div className='d-flex flex-column'>
-            <h4>{team.name}</h4>
-            {team.description}
-            </div>
-            <div>{team.user_ids ? team.user_ids.split(',').length : '0'} / 4 members</div>
+              <div className='col-11 pe-2'>
+                <h4>{team.name}</h4>
+                <div className='text-break'>{team.description}</div>
+              </div>
+              <div className ='col-1'>{team.user_ids ? team.user_ids.split(',').length : '0'} / 4 members</div>
             </div>
           </ListGroup.Item>
         );
