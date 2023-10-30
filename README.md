@@ -45,4 +45,13 @@ Deployment Steps:
 3. Run `npm run build`.
 4. Run `sudo systemctl restart cheesehacks2022.service`
 5. Run `sudo systemctl status cheesehacks2022.service`
-    a. Check that status is running
+   a. Check that status is running
+
+### Credits
+
+Default page gifs:
+
+1. Innovation Lightbulb by Snowterror
+2. Online Store Design GIF By Krepling
+3. Illustration Brainstorming GIF By Jef Caine
+4. Away We Go Space GIF By Shane Beam

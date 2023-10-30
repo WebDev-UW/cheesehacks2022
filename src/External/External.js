@@ -161,7 +161,7 @@ export default function External(props) {
                 height="250px"
                 style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/innovation.jpg"
+                src="/api/files/innovation.gif"
               ></Card.Img>
               <Card.Body>
                 <Card.Title>Innovation</Card.Title>
@@ -182,7 +182,7 @@ export default function External(props) {
                 height="250px"
                 style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/style.jpg"
+                src="/api/files/style.gif"
               ></Card.Img>
               <Card.Body>
                 <Card.Title>Style</Card.Title>
@@ -202,7 +202,7 @@ export default function External(props) {
                 height="250px"
                 style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/creativity.jpg"
+                src="/api/files/creativity.gif"
               ></Card.Img>
               <Card.Body>
                 <Card.Title>Creativity</Card.Title>
@@ -221,7 +221,7 @@ export default function External(props) {
                 height="250px"
                 style={{ objectFit: "cover" }}
                 varaint="top"
-                src="/api/files/viability.jpg"
+                src="/api/files/viability.gif"
               ></Card.Img>
               <Card.Body>
                 <Card.Title>Viability</Card.Title>
