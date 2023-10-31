@@ -21,6 +21,8 @@ const dbOptions = {
 let sessionStore = new MySQLStore(dbOptions);
 
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
+const validDomains = ["wisc.edu", "beloit.edu"];
+const INVALID_DOMAIN_ERROR = "Invalid domain. Please use your school email! Do contact Ethan Yan (eyyan@wisc.edu) if there are any issues.";
 
 passport.use(
   new GoogleStrategy(
@@ -30,6 +32,11 @@ passport.use(
       callbackURL: process.env.SITE_URL + "/login/callback",
     },
     function (accessToken, refreshToken, profile, cb) {
+
+      if (!validDomains.includes(profile._json.hd)) {
+        return cb(new Error(INVALID_DOMAIN_ERROR));
+      }
+
       //console.log(profile)
       findOrCreateUser(profile)
         .then((user) => {
