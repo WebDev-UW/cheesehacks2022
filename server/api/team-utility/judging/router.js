@@ -1,6 +1,6 @@
 const e = require("express");
 const express = require("express");
-const { SubmitJudgingScores } = require("./functions");
+const { SubmitJudgingScores, getAllTeamScores } = require("./functions");
 
 const router = express.Router();
 
@@ -35,6 +35,16 @@ router.post('/submit-scores', (req, res) => {
           console.error(err);
           res.status(500).json({ message: 'An error occurred while submitting scores' });
       });
+});
+
+router.get('/scores', async (req, res) => {
+  try {
+      const scores = await getAllTeamScores();
+      res.json(scores);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error while retrieving scores');
+  }
 });
 
 module.exports = router

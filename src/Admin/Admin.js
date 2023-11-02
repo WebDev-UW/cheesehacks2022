@@ -6,6 +6,7 @@ import SubmissionManagement from './AdminComponents/SubmissionManagement'
 import TeamManagement from './AdminComponents/TeamManagement'
 import UserManagement from './AdminComponents/UserManagement'
 import Judging from './AdminComponents/Judging'
+import Scoreboard from './AdminComponents/Scoreboard'
 
 export default function Admin(props) {
     return <Container fluid>
@@ -19,6 +20,7 @@ export default function Admin(props) {
                     <Nav.Item><Nav.Link eventKey='submissions'>Submission Management</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link eventKey='checkin'>Check In</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link eventKey='judging'>Judging</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link eventKey='scoreboard'>Scoreboard</Nav.Link></Nav.Item>
                 </Nav>
             </Col>
             <Col md='10'>
@@ -51,6 +53,11 @@ export default function Admin(props) {
                     <Tab.Pane eventKey='judging'>
                         <React.StrictMode>
                             <Judging user={props.user} />
+                        </React.StrictMode>
+                    </Tab.Pane>
+                    <Tab.Pane eventKey='scoreboard'>
+                        <React.StrictMode>
+                            <Scoreboard user={props.user} />
                         </React.StrictMode>
                     </Tab.Pane>
                 </Tab.Content>

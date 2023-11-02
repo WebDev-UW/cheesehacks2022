@@ -29,4 +29,18 @@ function SubmitJudgingScores(team_id, innovation_score, style_score, creativity_
     });
 }
 
-module.exports = {SubmitJudgingScores}
+function getAllTeamScores() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT te.name, ts.*
+        FROM team_entry te 
+        LEFT JOIN team_scores ts ON te.id = ts.team_id`; 
+        db.query(sql, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(results);
+        });
+    });
+}
+
+module.exports = { SubmitJudgingScores, getAllTeamScores }
