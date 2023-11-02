@@ -76,4 +76,34 @@ function deleteTeam(id) {
   })
 }
 
-module.exports = { getAllTeams, getTeam, createTeam, modifyTeam, deleteTeam };
+/**
+ * Queries the database to return a single team (to be judged)
+ * @param {Integer} id The team ID
+ * @returns Promise that resolve to a JSON array of a single team
+ * @author Ethan Yan
+ */
+function getTeamJudgingDetails(id) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `
+      SELECT te.*, GROUP_CONCAT(u.id) AS user_ids, ls.file_location, ls.url
+      FROM team_entry te 
+      LEFT JOIN user_entry u ON te.id = u.team
+      LEFT JOIN (
+          SELECT *
+          FROM submission_entry se
+          WHERE team_id = ?
+          ORDER BY created_datetime DESC
+          LIMIT 1
+      ) AS ls ON ls.team_id = te.id
+      WHERE te.id = ?
+      GROUP BY te.id, ls.file_location, ls.url;
+    `;
+
+    db.query(sqlQuery, [id, id], (err, rows) => {
+      err ? reject(err) : resolve(rows);
+    });
+  });
+}
+
+
+module.exports = { getAllTeams, getTeam, createTeam, modifyTeam, deleteTeam, getTeamJudgingDetails };

@@ -469,6 +469,31 @@
         }
       }
     },
+    "/api/team-utility/team/judging/{id}": {
+      "get": {
+        "tags": [
+          "team-utility/team"
+        ],
+        "summary": "Load a single team with judging details",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/team-utility/stats/": {
       "get": {
         "tags": [
@@ -561,6 +586,51 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/team-utility/judging/submit-scores": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "team_id": {
+                  "example": "any"
+                },
+                "innovation": {
+                  "example": "any"
+                },
+                "style": {
+                  "example": "any"
+                },
+                "creativity": {
+                  "example": "any"
+                },
+                "viability": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"

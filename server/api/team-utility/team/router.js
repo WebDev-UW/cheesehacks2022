@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllTeams, getTeam, createTeam, modifyTeam, deleteTeam } = require('./functions')
+const { getAllTeams, getTeam, createTeam, modifyTeam, deleteTeam, getTeamJudgingDetails } = require('./functions')
 
 const router = express.Router()
 
@@ -20,6 +20,18 @@ router.get('/:id', (req, res) => {
     // #swagger.tags = ["team-utility/team"]
     // #swagger.summary = "Load a single team"
     getTeam(req.params.id)
+    .then(row => {
+        res.json(row)
+    })
+    .catch(err => {
+        res.status(500).json({err: err})
+    })
+})
+
+router.get('/judging/:id', (req, res) => {
+    // #swagger.tags = ["team-utility/team"]
+    // #swagger.summary = "Load a single team with judging details"
+    getTeamJudgingDetails(req.params.id)
     .then(row => {
         res.json(row)
     })
