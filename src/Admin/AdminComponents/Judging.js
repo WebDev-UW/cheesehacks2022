@@ -264,7 +264,11 @@ export default function JudgingPage() {
                             <Card.Body>
                                 <Card.Title>Innovation</Card.Title>
                                 <Card.Text>
-                                    Build a project that expands on the technologies...
+                                    Score of 1: The project simply repackages existing technology or solutions without any novel application or integration. It does not present any discernible advancement or unique use of technology. For instance, creating a basic calculator app that does not improve upon or modify any existing functionalities.<br /> <br />
+
+                                    Score of 5: The project shows a moderate level of innovation by integrating well-known technologies in a somewhat novel way or by fulfilling a common technological need with a slight twist. An example could be a photo-sharing app that integrates a basic existing filter feature not yet common in similar apps. <br/> <br />
+
+                                    Score of 10: The project is a groundbreaking development that significantly pushes the envelope of what’s currently possible. It could be a tool that uniquely combines AR and crowd-sourced data to solve complex urban planning challenges, or a new algorithm that dramatically improves the efficiency of renewable energy systems.
                                 </Card.Text>
                                 <Form.Group>
                                     <Form.Label>Score</Form.Label>
@@ -282,7 +286,11 @@ export default function JudgingPage() {
                             <Card.Body>
                                 <Card.Title>Style</Card.Title>
                                 <Card.Text>
-                                    Who cares what the website does...
+                                    Score of 1: The project's design is non-functional, with a confusing layout, incoherent color scheme, and lack of attention to user experience. An example could be a text-based interface with harsh colors, poor alignment, and hard-to-read fonts. <br /> <br />
+
+                                    Score of 5: The project has a competent design with an adequate user interface that covers the basics of user experience but lacks the polished, intuitive feel of professional designs. It could be a blog with a clean layout but standard template without any unique branding or design elements. <br /> <br />
+
+                                    Score of 10: The project boasts a stellar design that rivals or surpasses professional standards. It combines aesthetics with functionality seamlessly, such as a fitness app with an engaging, intuitive interface, and smooth interactions that provide an exceptional user experience.
                                 </Card.Text>
                                 <Form.Group>
                                     <Form.Label>Score</Form.Label>
@@ -300,7 +308,11 @@ export default function JudgingPage() {
                             <Card.Body>
                                 <Card.Title>Creativity</Card.Title>
                                 <Card.Text>
-                                    Think outside of the box...
+                                    Score of 1: The project does not demonstrate original thought or novel concepts. It might be yet another to-do list app with standard features and no unique twist or new approach to the problem it aims to solve. <br /> <br />
+
+                                    Score of 5: The project exhibits some creative elements or a unique feature set that differentiates it from typical applications, though it may still draw heavily from existing ideas. For example, a dating app that incorporates a new matching algorithm based on a user’s choice of movies. <br /> <br />
+
+                                    Score of 10: The project is a testament to out-of-the-box thinking and originality, providing a solution or experience that is entirely unique. An example could be an app that gamifies social volunteering, connecting people with local social causes in an interactive, competitive format.
                                 </Card.Text>
                                 <Form.Group>
                                     <Form.Label>Score</Form.Label>
@@ -318,7 +330,11 @@ export default function JudgingPage() {
                             <Card.Body>
                                 <Card.Title>Viability</Card.Title>
                                 <Card.Text>
-                                    After all is said and done...
+                                    Score of 1: The project is impractical for real-world application, either because it addresses a non-existent problem, is too niche without a clear target audience, or is technologically unfeasible. For example, an app that catalogues sand types from beaches around the world – interesting, but with limited market appeal and use case. <br /> <br />
+
+                                    Score of 5: The project serves a legitimate need and could potentially attract a user base, but may lack a clear business model or evidence of market demand. It might be a well-designed meal-planning app that doesn't clearly outshine the many competitors in the market. <br /> <br />
+
+                                    Score of 10: The project is highly marketable with a clear value proposition, strong user appeal, and potential for monetization or significant impact. It could be an app that effectively manages and schedules freelance gigs for a growing gig economy, connecting workers with opportunities in a streamlined, efficient manner.
                                 </Card.Text>
                                 <Form.Group>
                                     <Form.Label>Score</Form.Label>
